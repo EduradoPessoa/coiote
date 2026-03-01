@@ -2,6 +2,8 @@ import type { Tool, ToolResult, ToolContext } from '../types.js';
 import fs from 'fs-extra';
 import { validatePath } from '../../security/path-validator.js';
 import { ToolExecutionError } from '../../errors.js';
+import { scanForInjection } from '../../security/injection-detector.js';
+import { sanitizeForLLM } from '../../security/content-sanitizer.js';
 
 export interface ReadFileInput {
     path: string;
@@ -38,9 +40,22 @@ export const readFileTool: Tool<ReadFileInput, string> = {
 
             const content = await fs.readFile(fullPath, 'utf-8');
 
+            // Security Scan
+            const scan = scanForInjection(content, input.path);
+            if (!scan.safe) {
+                return {
+                    success: false,
+                    summary: `Leitura bloqueada em ${input.path}: suspeita de Prompt Injection`,
+                    error: `Prompt Injection detectado: ${scan.findings.join(', ')}`
+                };
+            }
+
+            // Sanitization
+            const cleanContent = sanitizeForLLM(content);
+
             return {
                 success: true,
-                value: content,
+                value: cleanContent,
                 summary: `Arquivo lido: ${input.path}`,
             };
         } catch (e) {

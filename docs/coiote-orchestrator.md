@@ -271,15 +271,15 @@ O Coiote entende o projeto em que está trabalhando sem precisar de instruções
 
 **Referências:** `coiote-data.md §7` (Contexto Runtime), `coiote-security.md §7` (Dados Sensíveis)
 
-- [ ] `src/agent/context-manager.ts` — estratégia de carregamento por prioridade
+- [x] `src/agent/context-manager.ts` — estratégia de carregamento por prioridade
   - Prioridade 1: arquivos mencionados no prompt
   - Prioridade 2: `coiote.config.md`
   - Prioridade 3: mudanças git recentes
   - Prioridade 4: estrutura do projeto (tree)
   - Prioridade 5: arquivos relacionados (imports)
-- [ ] Truncamento inteligente de arquivos grandes (resumo de estrutura para >200 linhas)
-- [ ] `src/security/content-sanitizer.ts` — mascarar segredos antes de enviar (`coiote-security.md §7`)
-- [ ] `src/security/injection-detector.ts` — scan de arquivos antes de incluir no contexto
+- [x] Truncamento inteligente de arquivos grandes (resumo de estrutura para >200 linhas)
+- [x] `src/security/content-sanitizer.ts` — mascarar segredos antes de enviar (`coiote-security.md §7`)
+- [x] `src/security/injection-detector.ts` — scan de arquivos antes de incluir no contexto
 
 ---
 
@@ -504,7 +504,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
 Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
-Fase 2:  [x] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
+Fase 2:  [x] Semana 5  [x] Semana 6  [ ] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
 ```

@@ -133,15 +133,16 @@ Estes não são marketing. São as decisões concretas que tomamos (e que você 
 
 | Funcionalidade | Status |
 |----------------|--------|
-| Loop agêntico com plano antes de executar | 🔨 Em desenvolvimento |
-| Preview de arquivos antes de escrever (diff) | 🔨 Em desenvolvimento |
-| Sistema de permissões em 3 camadas | 🔨 Em desenvolvimento |
-| Erros com contexto humano e opções de recuperação | 🔨 Em desenvolvimento |
-| Integração com Claude (Anthropic) | 🔨 Em desenvolvimento |
-| Ferramentas de filesystem, shell e git | 🔨 Em desenvolvimento |
-| Histórico de sessões local (SQLite) | 📅 Fase 2 |
-| Leitura automática do `coiote.config.md` | 📅 Fase 2 |
-| Integração com git (commit, diff, branch) | 📅 Fase 2 |
+| Loop agêntico com plano antes de executar | ✅ Concluído |
+| Preview de arquivos antes de escrever (diff) | ✅ Concluído |
+| Sistema de permissões em 3 camadas | ✅ Concluído |
+| Erros com contexto humano e opções de recuperação | ✅ Concluído |
+| Integração com Claude (Anthropic) | ✅ Concluído |
+| Ferramentas de filesystem, shell e git | ✅ Concluído |
+| Histórico de sessões local (SQLite) | ✅ Concluído |
+| Leitura automática do `coiote.config.md` | ✅ Concluído |
+| Integração com git (commit, diff, branch) | ✅ Concluído |
+| Truncamento inteligente e Sanitize de Contexto | ✅ Concluído |
 | Suporte a OpenAI e modelos Ollama locais | 📅 Fase 3 |
 | Modo headless para CI/CD | 📅 Fase 3 |
 | Slash commands no REPL (`/test`, `/commit`) | 📅 Fase 3 |
@@ -309,11 +310,11 @@ Se você está em dúvida por onde começar, procure issues com a label [`good f
 O desenvolvimento está dividido em 4 fases:
 
 ```
-Fase 1 — MVP Funcional         (semanas 1–4)   🔨 em andamento
+Fase 1 — MVP Funcional         (semanas 1–4)   ✅ Concluído
   Loop básico, tools de filesystem e shell,
   sistema de comunicação, permissões
 
-Fase 2 — Context Awareness     (semanas 5–8)   📅 planejado
+Fase 2 — Context Awareness     (semanas 5–8)   � em andamento
   Git integration, leitura de coiote.config.md,
   histórico de sessões, compactação de contexto
 

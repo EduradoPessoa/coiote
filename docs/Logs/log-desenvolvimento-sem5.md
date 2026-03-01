@@ -31,3 +31,25 @@
 ✔️ MVP Test mantido passável com novos dependencies injeções.
 
 A estrutura começa a transitar para ganhar total Consciência de Ambientes! 🐺 
+
+---
+
+## 2026-03-01 — Semana 6: Context Loading Inteligente e Segurança de Dados
+
+**Data e hora:** 2026-03-01T23:25:00-03:00
+
+### O que foi Feito
+
+| Componente | Mudança | Detalhes Técnicos |
+|------------|---------|----------|
+| **`ContextManager` (`src/agent/context-manager.ts`)** | Implementação Base | Criada lógica de carregamento de arquivos com **truncamento inteligente** (head/tail + resumo de estrutura/símbolos) para arquivos >200 linhas. Isso economiza tokens mantendo a visão estrutural do código. |
+| **`ContentSanitizer` (`src/security/content-sanitizer.ts`)** | Detector de Segredos | Implementada sanitização de conteúdos que remove API Keys (sk-ant, sk-...), segredos de banco, tokens JWT e Chaves Privadas antes de enviá-los ao provedor de LLM. |
+| **`InjectionDetector` (`src/security/injection-detector.ts`)** | Scan Anti-Prompt-Injection | Implementado scan de arquivos por padrões de "indirect prompt injection" (ex: "ignore previous instructions"). Impede que o código do projeto manipule o comportamento do agende. |
+| **Integração no Agente** | System Prompt Dinâmico | O `CoioteAgent` agora utiliza o `ContextManager` para carregar o contexto inicial de arquivos definidos como `alwaysInclude` no `coiote.config.md`, injetando-os de forma segura no início da conversa. |
+| **`read_file` Tool Seguro** | Upgrade de Segurança | A ferramenta de leitura de arquivos agora passa obrigatoriamente pelos scans de injeção e sanitização antes de retornar o valor ao LLM. |
+
+### Cheques efetuados!
+
+✔️ `pnpm typecheck` aprovado.
+✔️ `pnpm test` aprovado.
+✔️ Proteção de dados sensíveis validada por regex.

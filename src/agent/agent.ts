@@ -11,6 +11,7 @@ import { ContextOverflowError } from '../errors.js';
 import { simpleGit } from 'simple-git';
 import type { GlobalConfig } from '../config/global-config.js';
 import type { ProjectConfig } from '../config/project-config.js';
+import { ContextManager } from './context-manager.js';
 
 // Import Anthropic Tool directly for types or use registry abstraction
 export interface CoioteAgentConfig {
@@ -40,9 +41,11 @@ export class CoioteAgent {
     private sessionDb = new SessionDAO();
     private messagesDb = new MessageDAO();
     private abortController = new AbortController();
+    private contextManager: ContextManager;
 
     constructor(private config: CoioteAgentConfig) {
         this.planner = new AgentPlanner(config.provider, config.reporter);
+        this.contextManager = new ContextManager(config.projectRoot);
     }
 
     abort(): void {
@@ -74,8 +77,12 @@ export class CoioteAgent {
 
             this.config.reporter.plan(plan);
 
-            // We need a pseudo step logic derived from plan length iteration loop 
-            // Right now MVP implies agent loop resolves automatically as Claude outputs tasks 
+            // Preparar Contexto Inicial
+            const alwaysInclude = this.config.projectConfig.alwaysInclude || [];
+            const initialContextFiles = await this.contextManager.collectInitialContext(alwaysInclude);
+            const contextString = this.contextManager.formatContext(initialContextFiles);
+
+            const systemPromptWithContext = `${SYSTEM_PROMPT}\n\nCONTEXTO DO PROJETO ATUAL:\n${contextString}`;
 
             const history: ChatMessage[] = [
                 { role: 'user', content: prompt }
@@ -94,7 +101,7 @@ export class CoioteAgent {
 
                 const stream = await this.config.provider.stream({
                     messages: history as any,
-                    system: SYSTEM_PROMPT,
+                    system: systemPromptWithContext,
                     tools: this.config.tools.toAnthropicFormat() as any
                 });
 
