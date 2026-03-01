@@ -298,7 +298,7 @@ git checkout -b feat/nome-da-sua-contribuicao
 
 Leia o [`CONTRIBUTING.md`](./CONTRIBUTING.md) para o guia completo — incluindo convenções de commit, como rodar os testes e como a revisão de código funciona.
 
-Se você está em dúvida por onde começar, procure issues com a label [`good first issue`](https://github.com/seu-usuario/coiote/issues?q=label%3A%22good+first+issue%22). São tarefas bem delimitadas, com contexto suficiente para uma primeira contribuição.
+Se você está em dúvida por onde começar, procure issues com a label [`good first issue`](https://github.com/EduardoPessoa/coiote/issues?q=label%3A%22good+first+issue%22). São tarefas bem delimitadas, com contexto suficiente para uma primeira contribuição.
 
 **Tem uma ideia mas não quer codificar?** Abre uma issue. Conversamos.
 
@@ -341,7 +341,7 @@ O Coiote lida com código e executa comandos — isso merece atenção:
 
 Para mais detalhes, veja [`docs/coiote-security.md`](./docs/coiote-security.md).
 
-Para reportar uma vulnerabilidade, não abra uma issue pública — use os [GitHub Security Advisories](https://github.com/seu-usuario/coiote/security/advisories).
+Para reportar uma vulnerabilidade, não abra uma issue pública — use os [GitHub Security Advisories](https://github.com/EduardoPessoa/coiote/security/advisories).
 
 ---
 
