@@ -109,3 +109,29 @@ test/
 4. **Thresholds de coverage em 60%** — Valor inicial conservador; será aumentado conforme mais código e testes forem adicionados nas próximas semanas.
 
 ---
+
+## 2026-03-01 — Semana 7, Fase 2: Mais Tools + Histórico
+
+**Data e hora:** 2026-03-01T23:35:00-03:00
+
+### Prompt Recebido
+
+> Leia coiote.config.md e docs/coiote-orchestrator.md.
+> Vamos desenvolver a semana 7, iniciando a fase 2
+> 
+> Crie um documento chamado log-desenvolvimento.md na pasta /DOCS/Logs/ e ne registre data e hora, Prompt passado para você aqui, e sua resposta final.
+
+### O que foi Feito
+
+| Componente | Mudança | Detalhes Técnicos |
+|------------|---------|----------|
+| **FS Tools Expandidas** | `edit_file`, `delete_file`, `search_files` | Implementadas ferramentas de edição precisa (search/replace), deleção com confirmação de alto risco e busca recursiva (fallback robusto na ausência de ripgrep). |
+| **Shell Tools Novas** | `run_tests`, `install_package` | Automação para execução de suites de testes e instalação de dependências via npm/pnpm diretamente pelo agente. |
+| **Persistência de Erros e Logs** | Tabela `tool_calls` | Criada infraestrutura no SQLite para gravar cada chamada de ferramenta, incluindo parâmetros de entrada, saída, duração e sucesso. Isso permite auditoria completa. |
+| **Gestão de Histórico (CLI)** | Comando `coiote history` | Adicionado comando `history list` para ver sessões passadas e `history show <id>` para inspecionar o log de ferramentas de uma sessão específica. |
+
+### Cheques efetuados!
+
+✔️ `pnpm typecheck` aprovado em todo o workspace.
+✔️ Schema do SQLite migrado automaticamente para incluir `tool_calls`.
+✔️ Registro de ferramentas no CLI validado.

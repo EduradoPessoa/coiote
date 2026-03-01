@@ -14,10 +14,12 @@ import { Reporter } from './ui/reporter.js';
 import { PermissionManager } from './permissions/permission-manager.js';
 import { AnthropicProvider } from './providers/anthropic.js';
 import { ToolRegistry } from './tools/registry.js';
-import { readFileTool, writeFileTool, listFilesTool } from './tools/filesystem/index.js';
-import { runCommandTool } from './tools/shell/index.js';
+import { readFileTool, writeFileTool, listFilesTool, editFileTool, deleteFileTool, searchFilesTool } from './tools/filesystem/index.js';
+import { runCommandTool, runTestsTool, installPackageTool } from './tools/shell/index.js';
 import { gitStatusTool, gitDiffTool, gitCommitTool, gitBranchTool } from './tools/git/index.js';
 import { ProjectConfigManager } from './config/project-config.js';
+import { SessionDAO } from './persistence/sessions.js';
+import { ToolCallDAO } from './persistence/tool-calls.js';
 
 interface PackageJson {
     version: string;
@@ -58,7 +60,7 @@ export function createProgram(): Command {
             const globalConf = new GlobalConfig();
             const keyManager = new KeyManager();
 
-            let anthApiKey = await keyManager.getKey('anthropic');
+            const anthApiKey = await keyManager.getKey('anthropic');
             if (!anthApiKey) {
                 console.error('❌ Chave da Anthropic não encontrada.');
                 console.error('Configure usando: coiote config set-key anthropic sk-ant-...');
@@ -73,7 +75,12 @@ export function createProgram(): Command {
             tools.register(readFileTool);
             tools.register(writeFileTool);
             tools.register(listFilesTool);
+            tools.register(editFileTool);
+            tools.register(deleteFileTool);
+            tools.register(searchFilesTool);
             tools.register(runCommandTool);
+            tools.register(runTestsTool);
+            tools.register(installPackageTool);
             // git tools
             tools.register(gitStatusTool);
             tools.register(gitDiffTool);
@@ -101,6 +108,52 @@ export function createProgram(): Command {
             }
         });
 
+    const history = program.command('history').description('Gerenciar histórico de sessões');
+
+    history
+        .command('list')
+        .alias('ls')
+        .description('Listar sessões recentes')
+        .action(() => {
+            const dao = new SessionDAO();
+            const sessions = dao.listRecent(20);
+            if (sessions.length === 0) {
+                console.log('Nenhuma sessão encontrada.');
+                return;
+            }
+
+            console.table(sessions.map(s => ({
+                ID: s.id.slice(0, 8),
+                Projeto: s.projectName,
+                Modelo: s.model,
+                Data: new Date(s.createdAt).toLocaleString(),
+                Status: s.status
+            })));
+        });
+
+    history
+        .command('show <id>')
+        .description('Ver detalhes de uma sessão')
+        .action((id) => {
+            const sessionDao = new SessionDAO();
+            const toolDao = new ToolCallDAO();
+
+            const session = sessionDao.getById(id);
+            if (!session) {
+                // Tentar busca por prefixo se nao achou ID exato
+                const sessions = sessionDao.listRecent(100);
+                const match = sessions.find(s => s.id.startsWith(id));
+                if (match) {
+                    displaySessionDetails(match, toolDao.listBySession(match.id));
+                } else {
+                    console.error('Sessão não encontrada.');
+                }
+                return;
+            }
+
+            displaySessionDetails(session, toolDao.listBySession(session.id));
+        });
+
     const configCmd = program.command('config')
         .description('Gerenciar configurações persistentes locais do Coiote');
 
@@ -115,7 +168,7 @@ export function createProgram(): Command {
         .description('Altera config local global')
         .action((key, value) => {
             const globalConf = new GlobalConfig();
-            globalConf.set(key as any, value);
+            globalConf.set(key, value);
             console.log(`Configuração ${key} definida para ${value}`);
         });
 
@@ -145,4 +198,23 @@ export function createProgram(): Command {
 export async function run(): Promise<void> {
     const program = createProgram();
     await program.parseAsync(process.argv);
+}
+
+function displaySessionDetails(session: any, tools: any[]) {
+    console.log(`\n🐺 SESSÃO: ${session.id}`);
+    console.log(`Projeto: ${session.projectPath}`);
+    console.log(`Data: ${new Date(session.created_at || session.createdAt).toLocaleString()}`);
+    console.log(`Modelo: ${session.model}`);
+    console.log(`Tokens: ${session.total_tokens || session.totalTokens} (In: ${session.input_tokens || session.inputTokens}, Out: ${session.output_tokens || session.outputTokens})`);
+    console.log(`Status: ${session.status}`);
+
+    if (tools.length > 0) {
+        console.log('\nFERRAMENTAS EXECUTADAS:');
+        console.table(tools.map((t: any) => ({
+            Tool: t.tool_name || t.toolName,
+            Sucesso: (t.success === 1 || t.success === true) ? '✅' : '❌',
+            Duração: `${t.duration_ms || t.durationMs}ms`,
+            Resumo: t.summary
+        })));
+    }
 }

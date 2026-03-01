@@ -12,6 +12,7 @@ import { simpleGit } from 'simple-git';
 import type { GlobalConfig } from '../config/global-config.js';
 import type { ProjectConfig } from '../config/project-config.js';
 import { ContextManager } from './context-manager.js';
+import { ToolCallDAO } from '../persistence/tool-calls.js';
 
 // Import Anthropic Tool directly for types or use registry abstraction
 export interface CoioteAgentConfig {
@@ -40,6 +41,7 @@ export class CoioteAgent {
     private planner: AgentPlanner;
     private sessionDb = new SessionDAO();
     private messagesDb = new MessageDAO();
+    private toolCallDb = new ToolCallDAO();
     private abortController = new AbortController();
     private contextManager: ContextManager;
 
@@ -150,6 +152,7 @@ export class CoioteAgent {
                     if (t.name === 'write_file') filesModifiedCount++;
                     if (t.name === 'run_command') commandsCount++;
 
+                    const toolStartTime = Date.now();
                     try {
                         // Context execution bind
                         const res = await toolInterface.execute(t.input, {
@@ -159,18 +162,42 @@ export class CoioteAgent {
                             signal: this.abortController.signal
                         });
 
+                        const duration = Date.now() - toolStartTime;
                         this.config.reporter.toolResult(t.name, res.success, res.summary || '');
 
                         statusRes = {
                             success: res.success,
-                            summary: res.success ? res.summary : res.error!,
-                            error: !res.success ? res.error! : ''
+                            summary: res.success ? res.summary : (res.error || 'Erro desconhecido'),
+                            error: !res.success ? (res.error || 'Erro desconhecido') : ''
                         };
+
+                        // Persistir Tool Call
+                        this.toolCallDb.create({
+                            sessionId,
+                            taskId,
+                            toolName: t.name,
+                            inputJson: JSON.stringify(t.input),
+                            outputJson: JSON.stringify(res.value || {}),
+                            success: res.success,
+                            summary: res.summary,
+                            durationMs: duration
+                        });
 
                     } catch (e: any) {
                         const errMsg = e.message || 'Unknown Execution Error';
                         this.config.reporter.error(new Error(errMsg));
                         statusRes = { success: false, summary: '', error: errMsg };
+
+                        // Persistir Falha
+                        this.toolCallDb.create({
+                            sessionId,
+                            taskId,
+                            toolName: t.name,
+                            inputJson: JSON.stringify(t.input),
+                            success: false,
+                            summary: errMsg,
+                            durationMs: Date.now() - toolStartTime
+                        });
                     }
 
                     toolResultBlocks.push({

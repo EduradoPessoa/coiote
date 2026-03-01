@@ -17,7 +17,7 @@ export const StepProgress: React.FC<StepProgressProps> = ({ step, current, total
         const timer = setInterval(() => {
             setFrame((prev) => (prev + 1) % spinner.frames.length);
         }, spinner.interval);
-        return () => clearInterval(timer);
+        return () => { clearInterval(timer); };
     }, [spinner]);
 
     return (

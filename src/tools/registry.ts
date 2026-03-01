@@ -2,16 +2,16 @@ import type { Tool } from './types.js';
 import type { Tool as AnthropicTool } from '@anthropic-ai/sdk/resources/messages.js';
 
 export class ToolRegistry {
-    private tools = new Map<string, Tool<unknown, unknown>>();
+    private tools = new Map<string, Tool>();
 
-    register(tool: Tool<unknown, unknown>): void {
+    register(tool: Tool): void {
         if (this.tools.has(tool.name)) {
             throw new Error(`Tool '${tool.name}' já está registrada`);
         }
         this.tools.set(tool.name, tool);
     }
 
-    get(name: string): Tool<unknown, unknown> {
+    get(name: string): Tool {
         const tool = this.tools.get(name);
         if (!tool) throw new Error(`Tool desconhecida: ${name}`);
         return tool;

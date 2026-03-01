@@ -19,7 +19,8 @@ export interface PermissionRequest {
 
 export interface HighRiskPermissionRequest {
     action: string;
-    command: string;
+    command?: string;
+    path?: string;
     potentialImpact: string;
 }
 

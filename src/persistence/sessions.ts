@@ -43,4 +43,12 @@ export class SessionDAO {
         const stmt = this.db.prepare(`UPDATE sessions SET last_active_at = ? WHERE id = ?`);
         stmt.run(Date.now(), sessionId);
     }
+
+    listRecent(limit: number) {
+        return this.db.prepare('SELECT * FROM sessions ORDER BY last_active_at DESC LIMIT ?').all(limit) as any[];
+    }
+
+    getById(id: string) {
+        return this.db.prepare('SELECT * FROM sessions WHERE id = ?').get(id) as any;
+    }
 }

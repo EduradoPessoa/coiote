@@ -7,20 +7,20 @@ const DB_DIR = path.join(os.homedir(), '.coiote');
 const DB_PATH = path.join(DB_DIR, 'coiote.db');
 
 export class DbClient {
-    private static instance: Database.Database;
+  private static instance: Database.Database;
 
-    public static getInstance(): Database.Database {
-        if (!this.instance) {
-            fs.ensureDirSync(DB_DIR);
-            this.instance = new Database(DB_PATH);
-            // Run Initial schema migrations
-            this.runMigrations(this.instance);
-        }
-        return this.instance;
+  public static getInstance(): Database.Database {
+    if (!this.instance) {
+      fs.ensureDirSync(DB_DIR);
+      this.instance = new Database(DB_PATH);
+      // Run Initial schema migrations
+      this.runMigrations(this.instance);
     }
+    return this.instance;
+  }
 
-    private static runMigrations(db: Database.Database) {
-        db.exec(`
+  private static runMigrations(db: Database.Database) {
+    db.exec(`
       CREATE TABLE IF NOT EXISTS sessions (
         id TEXT PRIMARY KEY,
         project_path TEXT NOT NULL,
@@ -61,10 +61,24 @@ export class DbClient {
         tokens INTEGER,
         is_compacted INTEGER NOT NULL DEFAULT 0
       );
+
+      CREATE TABLE IF NOT EXISTS tool_calls (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id TEXT NOT NULL REFERENCES sessions(id) ON DELETE CASCADE,
+        task_id INTEGER REFERENCES tasks(id),
+        tool_name TEXT NOT NULL,
+        input_json TEXT NOT NULL,
+        output_json TEXT,
+        success INTEGER DEFAULT 0,
+        summary TEXT,
+        duration_ms INTEGER,
+        created_at INTEGER NOT NULL
+      );
       
       CREATE INDEX IF NOT EXISTS idx_sessions_project ON sessions(project_path);
       CREATE INDEX IF NOT EXISTS idx_tasks_session ON tasks(session_id);
       CREATE INDEX IF NOT EXISTS idx_messages_session ON messages(session_id, created_at);
+      CREATE INDEX IF NOT EXISTS idx_tool_calls_session ON tool_calls(session_id);
     `);
-    }
+  }
 }

@@ -287,14 +287,14 @@ O Coiote entende o projeto em que está trabalhando sem precisar de instruções
 
 **Referências:** `coiote-development.md §4` (Tools), `coiote-data.md §3` (SQLite)
 
-- [ ] `tools/filesystem/edit-file.ts` — edição pontual com diff preciso (não sobrescrever arquivo inteiro)
-- [ ] `tools/filesystem/delete-file.ts` — confirmação reforçada (irreversível)
-- [ ] `tools/filesystem/search-files.ts` — ripgrep integration
-- [ ] `tools/shell/run-tests.ts` — execução de suite de testes com parsing de output
-- [ ] `tools/shell/install-package.ts` — npm/pip com confirmação e verificação de conflitos
-- [ ] `src/persistence/tool-calls.ts` — log completo de tool calls (`coiote-data.md §3`)
-- [ ] Comando `coiote history` — listar sessões recentes
-- [ ] Comando `coiote history show <id>` — ver detalhes de sessão
+- [x] `tools/filesystem/edit-file.ts` — edição pontual com diff preciso (não sobrescrever arquivo inteiro)
+- [x] `tools/filesystem/delete-file.ts` — confirmação reforçada (irreversível)
+- [x] `tools/filesystem/search-files.ts` — ripgrep integration
+- [x] `tools/shell/run-tests.ts` — execução de suite de testes com parsing de output
+- [x] `tools/shell/install-package.ts` — npm/pip com confirmação e verificação de conflitos
+- [x] `src/persistence/tool-calls.ts` — log completo de tool calls (`coiote-data.md §3`)
+- [x] Comando `coiote history` — listar sessões recentes
+- [x] Comando `coiote history show <id>` — ver detalhes de sessão
 
 ---
 
@@ -504,7 +504,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
 Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
-Fase 2:  [x] Semana 5  [x] Semana 6  [ ] Semana 7  [ ] Semana 8
+Fase 2:  [x] Semana 5  [x] Semana 6  [x] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
 ```
