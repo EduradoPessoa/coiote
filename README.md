@@ -1,11 +1,13 @@
 <div align="center">
 
+![Coiote Banner](docs/banner-coiote.jpg)
+
 # 🐺 Coiote
 
 ### Assistente de desenvolvimento guiado por IA — direto no seu terminal
 
-*Coiote planeja, escreve, refatora e executa código.  
-Mas ao contrário de outros agentes, ele te conta tudo o que está fazendo — antes de fazer.*
+_Coiote planeja, escreve, refatora e executa código.  
+Mas ao contrário de outros agentes, ele te conta tudo o que está fazendo — antes de fazer._
 
 <br>
 
@@ -47,7 +49,7 @@ Usamos vários agentes de código existentes e todos tinham o mesmo problema: **
 
 Essa opacidade gera desconfiança. E desconfiança nos faz não usar a ferramenta com todo o potencial.
 
-O Coiote é nossa tentativa de construir um agente que você *entende enquanto ele trabalha*. Não é sobre ser o mais poderoso. É sobre ser o mais legível.
+O Coiote é nossa tentativa de construir um agente que você _entende enquanto ele trabalha_. Não é sobre ser o mais poderoso. É sobre ser o mais legível.
 
 ---
 
@@ -131,24 +133,24 @@ Estes não são marketing. São as decisões concretas que tomamos (e que você 
 
 > ⚠️ O Coiote está em desenvolvimento ativo. A lista abaixo mistura o que já existe e o que está planejado — cada item indica seu estado.
 
-| Funcionalidade | Status |
-|----------------|--------|
-| Loop agêntico com plano antes de executar | ✅ Concluído |
-| Preview de arquivos antes de escrever (diff) | ✅ Concluído |
-| Sistema de permissões em 3 camadas | ✅ Concluído |
+| Funcionalidade                                    | Status       |
+| ------------------------------------------------- | ------------ |
+| Loop agêntico com plano antes de executar         | ✅ Concluído |
+| Preview de arquivos antes de escrever (diff)      | ✅ Concluído |
+| Sistema de permissões em 3 camadas                | ✅ Concluído |
 | Erros com contexto humano e opções de recuperação | ✅ Concluído |
-| Integração com Claude (Anthropic) | ✅ Concluído |
-| Ferramentas de filesystem, shell e git | ✅ Concluído |
-| Histórico de sessões local (SQLite) | ✅ Concluído |
-| Leitura automática do `coiote.config.md` | ✅ Concluído |
-| Integração com git (commit, diff, branch) | ✅ Concluído |
-| Truncamento inteligente e Sanitize de Contexto | ✅ Concluído |
-| Suporte a OpenAI e modelos Ollama locais | 📅 Fase 3 |
-| Modo headless para CI/CD | 📅 Fase 3 |
-| Slash commands no REPL (`/test`, `/commit`) | 📅 Fase 3 |
-| Suporte a MCP servers | 📅 Fase 3 |
-| TUI rica com syntax highlighting | 📅 Fase 4 |
-| Publicação via `npx coiote` | 📅 Fase 4 |
+| Integração com Claude (Anthropic)                 | ✅ Concluído |
+| Ferramentas de filesystem, shell e git            | ✅ Concluído |
+| Histórico de sessões local (SQLite)               | ✅ Concluído |
+| Leitura automática do `coiote.config.md`          | ✅ Concluído |
+| Integração com git (commit, diff, branch)         | ✅ Concluído |
+| Truncamento inteligente e Sanitize de Contexto    | ✅ Concluído |
+| Suporte a OpenAI e modelos Ollama locais          | 📅 Fase 3    |
+| Modo headless para CI/CD                          | 📅 Fase 3    |
+| Slash commands no REPL (`/test`, `/commit`)       | 📅 Fase 3    |
+| Suporte a MCP servers                             | 📅 Fase 3    |
+| TUI rica com syntax highlighting                  | 📅 Fase 4    |
+| Publicação via `npx coiote`                       | 📅 Fase 4    |
 
 ---
 
@@ -157,6 +159,7 @@ Estes não são marketing. São as decisões concretas que tomamos (e que você 
 > O Coiote ainda não está publicado no npm. Para usar, você precisará clonar e compilar localmente.
 
 **Pré-requisitos:**
+
 - Node.js 20 ou superior
 - pnpm (`npm install -g pnpm`)
 - Uma chave de API da Anthropic
@@ -195,25 +198,32 @@ O Coiote é configurado por projeto através do arquivo `coiote.config.md` na ra
 # Coiote — Configuração do Projeto
 
 ## Contexto do Projeto
+
 API REST em Node.js + TypeScript com PostgreSQL.
 
 ## Comandos
+
 - Testes: `npm test`
 - Build: `npm run build`
 
 ## Convenções
+
 - TypeScript strict
 - Commits em Conventional Commits
 
 ## Permissões
+
 ### Aprovação automática
+
 - Leitura de qualquer arquivo
 - Execução de: npm test, npm build
 
 ### Sempre confirmar
+
 - Modificação de arquivos em src/core/
 
 ### Nunca fazer
+
 - Modificar arquivos .env
 ```
 
@@ -271,12 +281,14 @@ coiote/
 O Coiote é um projeto jovem e a sua participação faz diferença de verdade — não só com código. Há muito espaço para contribuir:
 
 **Com código:**
+
 - Implementar tools que ainda não existem (`edit_file`, `run_tests`, as tools de git)
 - Escrever testes para os módulos existentes
 - Implementar providers alternativos (OpenAI, Ollama)
 - Melhorar os componentes de TUI
 
 **Sem código:**
+
 - Testar e reportar bugs
 - Sugerir melhorias na UX de comunicação (o diferencial do projeto)
 - Melhorar a documentação
