@@ -1,8 +1,8 @@
 <div align="center">
 
-![Coiote Banner](docs/banner-coiote.jpg)
+<img src="./docs/banner-coiote.jpg" alt="Coiote Banner" width="100%">
 
-# 🐺 Coiote
+<br />
 
 ### Assistente de desenvolvimento guiado por IA — direto no seu terminal
 
