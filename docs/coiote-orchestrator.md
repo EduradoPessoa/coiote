@@ -130,32 +130,32 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 #### Tarefas
 
 **Gestão de Chaves de API**
-- [ ] `src/config/key-manager.ts` — KeyManager com keytar + fallback (`coiote-security.md §2`)
-- [ ] Comando `coiote config set-key anthropic` — configuração inicial da chave
-- [ ] Comando `coiote config show` — exibir configuração sem expor chaves
-- [ ] Validação de formato de chave antes de armazenar
+- [x] `src/config/key-manager.ts` — KeyManager com keytar + fallback (`coiote-security.md §2`)
+- [ ] Comando `coiote config set-key anthropic` — configuração inicial da chave (Ainda não linkado na CLI)
+- [ ] Comando `coiote config show` — exibir configuração sem expor chaves (Ainda não linkado na CLI)
+- [x] Validação de formato de chave antes de armazenar
 
 **Provider Anthropic**
-- [ ] `src/providers/types.ts` — interface `LLMProvider` completa
-- [ ] `src/providers/anthropic.ts` — implementação com streaming
-- [ ] `src/providers/factory.ts` — factory pattern para instanciar
-- [ ] Teste de integração mockado com `nock`
+- [x] `src/providers/types.ts` — interface `LLMProvider` completa
+- [x] `src/providers/anthropic.ts` — implementação com streaming
+- [ ] `src/providers/factory.ts` — factory pattern para instanciar (Adiado para quando houver Mocks/OpenAI na Fase 3)
+- [ ] Teste de integração mockado com `nock` (Mock implementado manual no unit teste por ora)
 
 **Tools do Agente — Lote 1**
 
 > Para cada tool: implementar interface, teste unitário, registro
 
-- [ ] `tools/filesystem/read-file.ts` — sem confirmação, com path validation
-- [ ] `tools/filesystem/write-file.ts` — com diff preview e confirmação
-- [ ] `tools/filesystem/list-files.ts` — glob com filtro de sensíveis
-- [ ] `tools/shell/run-command.ts` — com validação, timeout, confirmação
-- [ ] `tools/registry.ts` — `ToolRegistry` com conversão para formato Anthropic
+- [x] `tools/filesystem/read-file.ts` — sem confirmação, com path validation
+- [x] `tools/filesystem/write-file.ts` — com diff preview e confirmação
+- [x] `tools/filesystem/list-files.ts` — glob com filtro de sensíveis
+- [x] `tools/shell/run-command.ts` — com validação, timeout, confirmação
+- [x] `tools/registry.ts` — `ToolRegistry` com conversão para formato Anthropic
 
 **Segurança nas Tools**
-- [ ] `src/security/path-validator.ts` — path traversal prevention (`coiote-security.md §4`)
-- [ ] `src/security/command-validator.ts` — blocklist e patterns (`coiote-security.md §3`)
+- [x] `src/security/path-validator.ts` — path traversal prevention (`coiote-security.md §4`)
+- [x] `src/security/command-validator.ts` — blocklist e patterns (`coiote-security.md §3`)
 
-**Critério da Semana:** `readFileTool.execute()` e `writeFileTool.execute()` passam nos testes unitários
+**Critério da Semana:** ✅ `readFileTool.execute()` e `writeFileTool.execute()` passam nos testes unitários
 
 ---
 
@@ -509,7 +509,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 ```
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
-Fase 1:  [x] Semana 1  [ ] Semana 2  [ ] Semana 3  [ ] Semana 4
+Fase 1:  [x] Semana 1  [x] Semana 2  [ ] Semana 3  [ ] Semana 4
 Fase 2:  [ ] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20

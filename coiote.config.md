@@ -3,7 +3,7 @@
 > **Arquivo:** coiote.config.md  
 > **Nível de segurança:** Básico — permissões amplas para desenvolvimento ativo  
 > **Última atualização:** 2026-02-28  
-> **Versão:** 1.2 — estado do projeto atualizado após Semana 1
+> **Versão:** 1.3 — estado do projeto atualizado após Semana 2
 
 ---
 
@@ -38,13 +38,13 @@ docs/                         ← documentação de desenvolvimento (consultar s
 ### Estado Atual do Projeto
 
 - **Fase:** 1 — MVP Funcional
-- **Semana:** 1 concluída ✅
-- **Estrutura de pastas:** Criada conforme `coiote-development.md §1`
-- **Build funcionando:** `pnpm build` → ESM success, `node dist/index.js --version` → `0.1.0`
-- **Typecheck:** `pnpm typecheck` → zero erros
-- **Dependências instaladas:** typescript, tsup, vitest, eslint, prettier, husky, lint-staged, commander, @types/node
-- **Arquivos de código:** `src/index.ts` (entrypoint), `src/cli.ts` (Commander), `src/errors.ts` (hierarquia de erros), `src/tools/types.ts` (ToolResult)
-- **Próximo passo:** Semana 2 — Provider Anthropic, tools base (read-file, write-file, run-command), gestão de chaves, security validators
+- **Semana:** 2 concluída ✅
+- **Tools:** Base funcional (read-file, write-file, list-files, run-command, Registry)
+- **Segurança:** PathValidator e CommandValidator ativos
+- **Provider:** Anthropic + KeyManager configurados na fundação
+- **Build funcionando:** `pnpm build`, `node dist/index.js --version` → `0.1.0`
+- **Qualidade:** Testes unitários de tools fluindo e Typecheck em ordem.
+- **Próximo passo:** Semana 3 — Agente Loop, Context Compaction, Integração completa da TUI com UI.
 
 ---
 
@@ -184,6 +184,10 @@ Ao iniciar qualquer tarefa, incluir sempre no contexto os arquivos que existem:
 ```
 src/errors.ts
 src/tools/types.ts
+src/config/key-manager.ts
+src/providers/types.ts
+src/security/path-validator.ts
+src/security/command-validator.ts
 src/cli.ts
 src/index.ts
 ```
@@ -191,7 +195,6 @@ src/index.ts
 Arquivos planejados (ainda não criados — incluir quando existirem):
 
 ```
-src/providers/types.ts       → Semana 2
 src/ui/reporter.ts           → Semana 3
 src/permissions/rules.ts     → Semana 3
 ```
