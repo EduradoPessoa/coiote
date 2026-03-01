@@ -407,6 +407,6 @@ O Coiote existe porque a comunidade de código aberto já construiu coisas incr�
 Feito com cuidado por pessoas que se frustram com caixas-pretas.  
 Se você também se frustra, **o Coiote é seu projeto tanto quanto nosso**.
 
-[⭐ Star no GitHub](https://github.com/seu-usuario/coiote) · [🐛 Reportar Bug](https://github.com/seu-usuario/coiote/issues) · [💡 Sugerir Feature](https://github.com/seu-usuario/coiote/issues) · [💬 Discussões](https://github.com/seu-usuario/coiote/discussions)
+[⭐ Star no GitHub](https://github.com/EduardoPessoa/coiote) · [🐛 Reportar Bug](https://github.com/EduardoPessoa/coiote/issues) · [💡 Sugerir Feature](https://github.com/EduardoPessoa/coiote/issues) · [💬 Discussões](https://github.com/EduardoPessoa/coiote/discussions)
 
 </div>

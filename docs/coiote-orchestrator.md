@@ -99,23 +99,23 @@ pnpm add -D typescript tsup vitest eslint prettier husky lint-staged
 npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 ```
 
-- [ ] Criar `package.json` com `"type": "module"`, engines, bin field
-- [ ] Configurar `tsconfig.json` com strict mode completo (ver `coiote-stack.md §2`)
-- [ ] Configurar `tsup.config.ts` com shebang `#!/usr/bin/env node`
-- [ ] Configurar `eslint.config.mjs` com typescript-eslint strict
-- [ ] Configurar `prettier` + `husky` + `lint-staged`
-- [ ] Configurar `vitest.config.ts` com coverage v8
+- [x] Criar `package.json` com `"type": "module"`, engines, bin field
+- [x] Configurar `tsconfig.json` com strict mode completo (ver `coiote-stack.md §2`)
+- [x] Configurar `tsup.config.ts` com shebang `#!/usr/bin/env node`
+- [x] Configurar `eslint.config.mjs` com typescript-eslint strict
+- [x] Configurar `prettier` + `husky` + `lint-staged`
+- [x] Configurar `vitest.config.ts` com coverage v8
 
 **Entrypoint CLI**
-- [ ] `src/index.ts` — boot mínimo com verificação de Node.js version
-- [ ] `src/cli.ts` — `commander` com estrutura base de comandos
-- [ ] Comando `coiote --version` funcionando
-- [ ] Comando `coiote --help` com descrição clara
+- [x] `src/index.ts` — boot mínimo com verificação de Node.js version
+- [x] `src/cli.ts` — `commander` com estrutura base de comandos
+- [x] Comando `coiote --version` funcionando
+- [x] Comando `coiote --help` com descrição clara
 
 **Estrutura de Pastas**
-- [ ] Criar estrutura completa de `src/` conforme `coiote-development.md §1`
-- [ ] Criar `test/` com `fixtures/express-api/` (projeto de teste)
-- [ ] `src/errors.ts` — hierarquia de erros base (`coiote-development.md §7`)
+- [x] Criar estrutura completa de `src/` conforme `coiote-development.md §1`
+- [x] Criar `test/` com `fixtures/express-api/` (projeto de teste)
+- [x] `src/errors.ts` — hierarquia de erros base (`coiote-development.md §7`)
 
 **Critério da Semana:** `pnpm build && node dist/index.js --version` funciona
 
@@ -507,9 +507,9 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 ### Rastreamento de Fases
 
 ```
-STATUS ATUAL: Fase 0 — Planejamento ✅
+STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
-Fase 1:  [ ] Semana 1  [ ] Semana 2  [ ] Semana 3  [ ] Semana 4
+Fase 1:  [x] Semana 1  [ ] Semana 2  [ ] Semana 3  [ ] Semana 4
 Fase 2:  [ ] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
