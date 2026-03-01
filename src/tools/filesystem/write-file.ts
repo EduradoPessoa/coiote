@@ -35,6 +35,8 @@ export const writeFileTool: Tool<WriteFileInput, void> = {
             // Aqui num sistema maduro usaríamos um `generateDiff`
             const diffLabel = isOverwrite ? 'Sobrescrever arquivo existente' : 'Criar novo arquivo';
 
+            ctx.reporter.toolCall('write_file', { path: input.path }, diffLabel);
+
             const allowed = await ctx.permissionManager.request({
                 tool: 'write_file',
                 path: input.path,

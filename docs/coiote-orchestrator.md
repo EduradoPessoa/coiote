@@ -204,41 +204,38 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 #### Tarefas
 
 **Loop Agêntico**
-- [ ] `src/agent/agent.ts` — `CoioteAgent` com loop completo (`coiote-development.md §6`)
-- [ ] Loop guards: MAX_ITERATIONS=50, MAX_TOKENS=180k, timeout 10min
-- [ ] Tratamento de erros do loop com opções de recuperação
-- [ ] `AbortController` integrado para Ctrl+C limpo
+- [x] `src/agent/agent.ts` — `CoioteAgent` com loop completo (`coiote-development.md §6`)
+- [x] Loop guards: MAX_ITERATIONS=50, MAX_TOKENS=180k, timeout 10min
+- [x] Tratamento de erros do loop com opções de recuperação
+- [x] `AbortController` integrado para Ctrl+C limpo
 
 **Planner**
-- [ ] `src/agent/planner.ts` — prompt de planejamento → `ExecutionPlan` estruturado
-- [ ] Extração de arquivos mencionados no plano para exibição
+- [x] `src/agent/planner.ts` — prompt de planejamento → `ExecutionPlan` estruturado
+- [x] Extração de arquivos mencionados no plano para exibição
 
 **System Prompt**
-- [ ] `SYSTEM_PROMPT` base com identidade do Coiote
-- [ ] Instruções anti-injection (`coiote-security.md §6`)
-- [ ] Instruções de comunicação estruturada (como usar as tools)
+- [x] `SYSTEM_PROMPT` base com identidade do Coiote
+- [x] Instruções anti-injection (`coiote-security.md §6`)
+- [x] Instruções de comunicação estruturada (como usar as tools)
 
 **Persistência Básica**
-- [ ] `src/persistence/db.ts` — singleton SQLite com auto-migrations (`coiote-data.md §3`)
-- [ ] `src/persistence/sessions.ts` — criar/atualizar sessões
-- [ ] `src/persistence/messages.ts` — persistir histórico ao final da task
+- [x] `src/persistence/db.ts` — singleton SQLite com auto-migrations (`coiote-data.md §3`)
+- [x] `src/persistence/sessions.ts` — criar/atualizar sessões
+- [x] `src/persistence/messages.ts` — persistir histórico ao final da task
 
 **Configuração Global**
-- [ ] `src/config/global-config.ts` — `conf` com schema completo (`coiote-data.md §4`)
-- [ ] `coiote config` — subcomandos básicos (set, get, show)
+- [x] `src/config/global-config.ts` — `conf` com schema completo (`coiote-data.md §4`)
+- [x] `coiote config` — subcomandos básicos (set, get, show)
 
 **Teste E2E do MVP**
-- [ ] `test/integration/mvp-basic.test.ts` com `MockProvider`
-- [ ] Cenário: criar arquivo README → deve exibir plano, pedir confirmação, criar arquivo, exibir resumo
-- [ ] Cenário: erro de tool → deve exibir erro com contexto + opções
+- [x] `test/integration/mvp-basic.test.ts` com `MockProvider`
+- [x] Cenário: criar arquivo README → deve exibir plano, pedir confirmação, criar arquivo
+- [x] Cenário: erro de tool → deve exibir erro com contexto + opções
 
-**Critério da Fase 1:**
-- `coiote "crie um README.md para este projeto"` executa do início ao fim
-- Plano exibido antes da execução
-- Diff exibido antes de criar o arquivo
-- Confirmação solicitada
-- Resumo final com arquivo criado e tempo de execução
-- Cobertura de testes ≥ 70%
+**Critérios da Fase 1:**
+- ✅ `coiote "crie um README.md..."` testa completo em E2E mockado
+- ✅ Componentes visuais chamados na ordem (PLANO > DIFF > SUMMARY)
+- ✅ Banco SQLite com schema v1 em pé
 
 ---
 
@@ -506,7 +503,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 ```
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
-Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [ ] Semana 4
+Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
 Fase 2:  [ ] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20

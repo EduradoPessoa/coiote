@@ -1,11 +1,11 @@
 export type JSONSchema = Record<string, unknown>;
 
 export interface Reporter {
-    toolCall(tool: string, input: unknown): void;
-    toolResult(result: string): void;
-    error(error: { what: string; why: string } | Error): void;
+    toolCall(tool: string, args: Record<string, unknown>, diff?: string): void;
+    toolResult(tool: string, success: boolean, summary: string): void;
+    error(error: any, options?: { label: string; value: string }[]): void;
     info(message: string): void;
-    warning(message: string): void;
+    warning(message: string, context?: string): void;
 }
 
 export interface PermissionRequest {

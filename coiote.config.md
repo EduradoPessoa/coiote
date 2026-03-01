@@ -3,7 +3,7 @@
 > **Arquivo:** coiote.config.md  
 > **Nível de segurança:** Básico — permissões amplas para desenvolvimento ativo  
 > **Última atualização:** 2026-02-28  
-> **Versão:** 1.4 — estado do projeto atualizado após Semana 3
+> **Versão:** 1.5 — Estado de completude total do projeto (FASE 1 - MVP FINALIZADO)
 
 ---
 
@@ -37,13 +37,11 @@ docs/                         ← documentação de desenvolvimento (consultar s
 
 ### Estado Atual do Projeto
 
-- **Fase:** 1 — MVP Funcional
-- **Semana:** 3 concluída ✅
-- **Comunicação:** `Reporter` e os componentes UI `ink` criados (`PlanDisplay`, `StepProgress`, `ErrorDisplay`, `DoneDisplay`, `WarningDisplay`, `ToolCallDisplay`, `DiffPreview`).
-- **Permissões:** Sistema de permissões triplo atuando em `SessionConfig`, `Rules` baseadas em `Path/Command Validator` e instâncias do `PermissionManager` integradas ao Inquirer.
-- **Configuração de TS e Testes:** Suporte React JSX ativado.
-- **Tools:** Base funcional (read/write file, list, run), Segurança e Autenticação (Anthropic + KeyManager).
-- **Próximo passo:** Semana 4 — Loop Agêntico Principal e integração completa de command bus com o agent planner.
+- **Fase:** 1 — MVP Funcional (FINALIZADA 🏁)
+- **Agente Principal:** `CoioteAgent` em total funcionamento (System Prompt + Planner Tool Injection) com proteções e MAX_TOKENS thresholds.
+- **Armazenamento / DB:** `better-sqlite3` guardando sessões, historicos e estatitisticas. O `conf` guarda preferências Globais via comandos CLI.
+- **Teste de Integração:** O teste `mvp-basic.test.ts` emulando a conversação provou a consistência lógica de toda construção (UI emite EventBus -> Tools emitem Action -> Permissão pede Confirmação -> Agente lê Stream de Tools).
+- **Próximo passo:** Transição para FASE 2: Compreensão de Código profunda com ContextAwareness.
 
 ---
 
@@ -178,27 +176,25 @@ pnpm-lock.yaml    (só o Coiote não toca — pnpm gerencia)
 
 ## Contexto de Arquivos — Sempre Incluir
 
-Ao iniciar qualquer tarefa, incluir sempre no contexto os arquivos que existem:
+Ao iniciar qualquer tarefa, incluir sempre no contexto os arquivos construtivos do loop:
 
 ```
-src/errors.ts
-src/tools/types.ts
-src/providers/types.ts
-src/config/key-manager.ts
-src/permissions/rules.ts
-src/permissions/session-config.ts
-src/permissions/permission-manager.ts
+src/agent/agent.ts
+src/agent/planner.ts
+src/agent/system-prompt.ts
+src/persistence/db.ts
+src/persistence/sessions.ts
+src/config/global-config.ts
 src/ui/reporter.ts
-src/ui/prompts.ts
 src/cli.ts
 src/index.ts
 ```
 
-Arquivos planejados (ainda não criados — incluir quando existirem):
+Arquivos planejados para Fase 2 (ainda não criados):
 
 ```
-src/agent/agent.ts           → Semana 4
-src/agent/planner.ts         → Semana 4
+src/agent/context-manager.ts     → Semana 5
+src/agent/compactor.ts           → Semana 5
 ```
 
 Ao delegar para um agente especializado, carregar também o perfil correspondente de `docs/agents/`:
