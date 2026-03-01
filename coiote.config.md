@@ -3,7 +3,7 @@
 > **Arquivo:** coiote.config.md  
 > **Nível de segurança:** Básico — permissões amplas para desenvolvimento ativo  
 > **Última atualização:** 2026-02-28  
-> **Versão:** 1.1 — estrutura de docs/ e agents/ adicionada
+> **Versão:** 1.2 — estado do projeto atualizado após Semana 1
 
 ---
 
@@ -34,6 +34,17 @@ docs/                         ← documentação de desenvolvimento (consultar s
     ├── coiote-agent-security.md  Auditoria de segurança e revisão de superfície de ataque
     └── coiote-agent-docs.md      Documentação técnica, changelogs e sincronização
 ```
+
+### Estado Atual do Projeto
+
+- **Fase:** 1 — MVP Funcional
+- **Semana:** 1 concluída ✅
+- **Estrutura de pastas:** Criada conforme `coiote-development.md §1`
+- **Build funcionando:** `pnpm build` → ESM success, `node dist/index.js --version` → `0.1.0`
+- **Typecheck:** `pnpm typecheck` → zero erros
+- **Dependências instaladas:** typescript, tsup, vitest, eslint, prettier, husky, lint-staged, commander, @types/node
+- **Arquivos de código:** `src/index.ts` (entrypoint), `src/cli.ts` (Commander), `src/errors.ts` (hierarquia de erros), `src/tools/types.ts` (ToolResult)
+- **Próximo passo:** Semana 2 — Provider Anthropic, tools base (read-file, write-file, run-command), gestão de chaves, security validators
 
 ---
 
@@ -168,14 +179,21 @@ pnpm-lock.yaml    (só o Coiote não toca — pnpm gerencia)
 
 ## Contexto de Arquivos — Sempre Incluir
 
-Ao iniciar qualquer tarefa, incluir sempre no contexto:
+Ao iniciar qualquer tarefa, incluir sempre no contexto os arquivos que existem:
 
 ```
-src/tools/types.ts
-src/providers/types.ts
-src/ui/reporter.ts
 src/errors.ts
-src/permissions/rules.ts
+src/tools/types.ts
+src/cli.ts
+src/index.ts
+```
+
+Arquivos planejados (ainda não criados — incluir quando existirem):
+
+```
+src/providers/types.ts       → Semana 2
+src/ui/reporter.ts           → Semana 3
+src/permissions/rules.ts     → Semana 3
 ```
 
 Ao delegar para um agente especializado, carregar também o perfil correspondente de `docs/agents/`:
