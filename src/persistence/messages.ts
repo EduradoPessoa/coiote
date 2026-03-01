@@ -23,4 +23,8 @@ export class MessageDAO {
         });
         runTransaction(history);
     }
+
+    markAsCompacted(sessionId: string) {
+        this.db.prepare('UPDATE messages SET is_compacted = 1 WHERE session_id = ?').run(sessionId);
+    }
 }

@@ -302,14 +302,14 @@ O Coiote entende o projeto em que está trabalhando sem precisar de instruções
 
 **Referências:** `coiote-development.md §6` (Loop), `coiote-data.md §7`
 
-- [ ] `src/agent/compactor.ts` — compactação de histórico quando > 100k tokens
-  - Usa `claude-haiku` para gerar resumo compacto
-  - Exibe aviso ao usuário antes de compactar
-  - Marca mensagens como `is_compacted=1` no SQLite
-- [ ] Modo `--verbose`: exibir raciocínio do LLM, tokens usados por step, tempo de cada tool
-- [ ] Modo `--quiet`: apenas erros críticos e resumo final
-- [ ] Dashboard de tokens no resumo: input/output/cache/custo estimado
-- [ ] `coiote data stats` — espaço usado, sessões armazenadas, tokens totais
+- [x] `src/agent/compactor.ts` — compactação de histórico quando > 100k tokens
+  - [x] Usa `claude-haiku` para gerar resumo compacto
+  - [x] Exibe aviso ao usuário antes de compactar
+  - [x] Marca mensagens como `is_compacted=1` no SQLite
+- [x] Modo `--verbose`: exibir raciocínio do LLM, tokens usados por step, tempo de cada tool
+- [x] Modo `--quiet`: apenas erros críticos e resumo final
+- [x] Dashboard de tokens no resumo: input/output/cache/custo estimado
+- [x] `coiote data stats` — espaço usado, sessões armazenadas, tokens totais
 
 **Critério da Fase 2:**
 - `coiote "adicione endpoint GET /health"` funciona em projeto Express sem instrução manual
@@ -504,7 +504,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
 Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
-Fase 2:  [x] Semana 5  [x] Semana 6  [x] Semana 7  [ ] Semana 8
+Fase 2:  [x] Semana 5  [x] Semana 6  [x] Semana 7  [x] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
 ```

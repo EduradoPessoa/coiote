@@ -135,3 +135,31 @@ test/
 ✔️ `pnpm typecheck` aprovado em todo o workspace.
 ✔️ Schema do SQLite migrado automaticamente para incluir `tool_calls`.
 ✔️ Registro de ferramentas no CLI validado.
+
+---
+
+## 2026-03-01 — Semana 8, Fase 2: Context Compaction + Verbosity
+
+**Data e hora:** 2026-03-01T23:55:00-03:00
+
+### Prompt Recebido
+
+> Leia coiote.config.md e docs/coiote-orchestrator.md.
+> Vamos desenvolver a semana 8.
+> 
+> Crie um documento chamado log-desenvolvimento.md na pasta /DOCS/Logs/ e ne registre data e hora, Prompt passado para você aqui, e sua resposta final.
+
+### O que foi Feito
+
+| Componente | Mudança | Detalhes Técnicos |
+|------------|---------|----------|
+| **`ContextCompactor`** | Redução de Contexto | Criado sistema que detecta quando o histórico excede 100k tokens e oferece ao usuário um resumo técnico gerado por LLM para "reiniciar" o contexto sem perder a memória das ações passadas. |
+| **Verbosity Modes** | `--verbose` e `--quiet` | Implementada lógica no Reporter e Agente para exibir ou ocultar detalhes granulados (raciocínio do LLM, tokens por step, tempo de tools) conforme a flag usada. |
+| **Resumo de Task Rico** | Dash de Métricas | O final de cada tarefa agora exibe um dashboard com: tempo total, iterações do loop, arquivos modificados e tokens estimados. |
+| **`coiote data stats`** | Telemetria Local | Novo comando que exibe o tamanho do banco de dados SQLite, total de sessões, tarefas e o consumo acumulado de tokens do projeto. |
+
+### Cheques efetuados!
+
+✔️ `pnpm typecheck` aprovado (ajustado `DoneDisplay` para o novo contrato de métricas).
+✔️ Fluxo de compactação validado com prompt interativo.
+✔️ Comando `data stats` calculando tamanho de disco e métricas de DB corretamente.

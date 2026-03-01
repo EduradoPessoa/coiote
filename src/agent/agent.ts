@@ -13,6 +13,7 @@ import type { GlobalConfig } from '../config/global-config.js';
 import type { ProjectConfig } from '../config/project-config.js';
 import { ContextManager } from './context-manager.js';
 import { ToolCallDAO } from '../persistence/tool-calls.js';
+import { ContextCompactor } from './compactor.js';
 
 // Import Anthropic Tool directly for types or use registry abstraction
 export interface CoioteAgentConfig {
@@ -44,10 +45,12 @@ export class CoioteAgent {
     private toolCallDb = new ToolCallDAO();
     private abortController = new AbortController();
     private contextManager: ContextManager;
+    private compactor: ContextCompactor;
 
     constructor(private config: CoioteAgentConfig) {
         this.planner = new AgentPlanner(config.provider, config.reporter);
         this.contextManager = new ContextManager(config.projectRoot);
+        this.compactor = new ContextCompactor(config.provider, config.reporter);
     }
 
     abort(): void {
@@ -96,7 +99,20 @@ export class CoioteAgent {
                 }
 
                 iterCount++;
-                const tokenEst = estimateTokensLen(history);
+                let tokenEst = estimateTokensLen(history);
+
+                // Check for Compaction
+                if (tokenEst > LOOP_GUARDS.CONTEXT_COMPACTION_THRESHOLD) {
+                    const result = await this.compactor.compact(history);
+                    if (result.summary) {
+                        // Mark old messages as compacted in DB (session logic)
+                        this.messagesDb.markAsCompacted(sessionId);
+                        history.length = 0;
+                        history.push(...result.compactedHistory);
+                        tokenEst = estimateTokensLen(history);
+                    }
+                }
+
                 if (tokenEst > LOOP_GUARDS.MAX_TOKENS) {
                     throw new ContextOverflowError(tokenEst, LOOP_GUARDS.MAX_TOKENS);
                 }
@@ -114,6 +130,7 @@ export class CoioteAgent {
                 for await (const chunk of stream) {
                     if (chunk.type === 'text' && chunk.text) {
                         modelText += chunk.text;
+                        this.config.reporter.verbose(chunk.text);
                     }
                     if (chunk.type === 'tool_use' && chunk.toolCall) {
                         hasToolCalls = true;
@@ -124,6 +141,10 @@ export class CoioteAgent {
                         });
                     }
                 }
+
+                // Verbose tokens
+                const inputEst = estimateTokensLen(history);
+                this.config.reporter.info(`[Step ${iterCount}] Tokens: ~${inputEst} (contexto)`);
 
                 // Apply assistant output to history
                 const astBlocks: any[] = [];
@@ -225,8 +246,20 @@ export class CoioteAgent {
             // Save history background
             this.messagesDb.saveHistory(sessionId, taskId, history as any[]);
 
-            // Auto-commit rule payload
-            if (this.config.globalConfig.get('autoCommit')) {
+            const durationSec = (Date.now() - startedAt) / 1000;
+            const finalTokens = estimateTokensLen(history);
+
+            this.config.reporter.done(
+                `Tarefa finalizada em ${durationSec.toFixed(1)}s e ${iterCount} iterações.`,
+                [
+                    { label: 'Arquivos Modificados', value: String(filesModifiedCount) },
+                    { label: 'Comandos Executados', value: String(commandsCount) },
+                    { label: 'Tokens Estimados', value: String(finalTokens) }
+                ]
+            );
+
+            // Auto-commit logic
+            if (this.config.globalConfig.autoCommit && !process.argv.includes('--no-git')) {
                 const git = simpleGit(this.config.projectRoot);
                 if (await git.checkIsRepo()) {
                     try {
@@ -237,13 +270,6 @@ export class CoioteAgent {
                     }
                 }
             }
-
-            // Calculate derived plan paths modified using unique dedups of the actions if we tracked them robustly.
-            this.config.reporter.done({
-                filesModified: plan?.filesToModify || [], // Placeholder list from planner vs actual
-                duration: Date.now() - startedAt,
-                tokensUsed: estimateTokensLen(history),
-            });
 
         } catch (e: any) {
             this.config.reporter.error(e);

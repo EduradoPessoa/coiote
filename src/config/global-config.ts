@@ -37,4 +37,12 @@ export class GlobalConfig {
     getAll(): GlobalConfigSchema {
         return this.conf.store;
     }
+
+    get autoCommit(): boolean {
+        return this.get('autoCommit');
+    }
+
+    get verbosity(): 'quiet' | 'normal' | 'verbose' {
+        return this.get('verbosity');
+    }
 }

@@ -19,6 +19,10 @@ export class DbClient {
     return this.instance;
   }
 
+  public static getDbPath(): string {
+    return DB_PATH;
+  }
+
   private static runMigrations(db: Database.Database) {
     db.exec(`
       CREATE TABLE IF NOT EXISTS sessions (

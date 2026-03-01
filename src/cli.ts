@@ -20,6 +20,8 @@ import { gitStatusTool, gitDiffTool, gitCommitTool, gitBranchTool } from './tool
 import { ProjectConfigManager } from './config/project-config.js';
 import { SessionDAO } from './persistence/sessions.js';
 import { ToolCallDAO } from './persistence/tool-calls.js';
+import { DbClient } from './persistence/db.js';
+import fs from 'fs-extra';
 
 interface PackageJson {
     version: string;
@@ -179,6 +181,25 @@ export function createProgram(): Command {
             const keyManager = new KeyManager();
             await keyManager.storeKey(provider, key);
             console.log(`✅ Chave API para O provider [${provider}] definida firmemente com Keychain / AES.`);
+        });
+
+    const dataCmd = program.command('data').description('Gerenciar dados locais e estatísticas');
+
+    dataCmd.command('stats')
+        .description('Exibir estatísticas de uso local')
+        .action(async () => {
+            const dao = new SessionDAO();
+            const stats = dao.getStatistics();
+            const dbPath = DbClient.getDbPath();
+            const dbSize = (await fs.stat(dbPath)).size;
+
+            console.log('\n🐺 ESTATÍSTICAS DO COIOTE');
+            console.log(`--------------------------`);
+            console.log(`Sessões Totais:    ${stats.sessionCount}`);
+            console.log(`Tarefas Totais:    ${stats.taskCount}`);
+            console.log(`Tokens Consumidos: ${stats.totalTokens.toLocaleString()}`);
+            console.log(`Espaço em Disco:   ${(dbSize / 1024 / 1024).toFixed(2)} MB`);
+            console.log(`Local do DB:       ${dbPath}`);
         });
 
     program.command('init')

@@ -11,10 +11,8 @@ export interface Step {
 }
 
 export interface ExecutionSummary {
-    filesModified: string[];
-    testResults?: string;
-    tokensUsed?: number;
-    duration?: number;
+    message: string;
+    metrics?: { label: string; value: string }[] | undefined;
 }
 
 export type CoioteEvent =
@@ -105,7 +103,7 @@ export class Reporter extends EventEmitter {
         this.emit('verbose', { type: 'verbose', message });
     }
 
-    done(summary: ExecutionSummary) {
-        this.emit('done', { type: 'done', summary });
+    done(message: string, metrics?: { label: string; value: string }[]) {
+        this.emit('done', { type: 'done', summary: { message, metrics } });
     }
 }

@@ -37,10 +37,9 @@ docs/                         ← documentação de desenvolvimento (consultar s
 
 ### Estado Atual do Projeto
 
-- **Fase:** 2 — Context Awareness
-- **Agente Principal:** `CoioteAgent` em total funcionamento (System Prompt + Planner Tool Injection) com porteção MAX_TOKENS thresholds.
-- **Integração Externa (Semana 5):** `simple-git` adicionado permitindo as tools `git_status`, `git_diff`, `git_commit`, `git_branch`. E configurador `ProjectConfigManager` habilitado.
-- **Próximo passo:** Semana 6 - Context Loading Inteligente
+- **Fase:** 2 — Context Awareness (CONCLUÍDA)
+- **Funcionalidades:** Context Loading Inteligente, Sanitização de Segredos, Anti-Injection, Git Integration, Context Compaction, Telemetria (`data stats`).
+- **Próximo passo:** Fase 3 — Agência Completa (Multi-provider, Headless, MCP)
 
 ---
 

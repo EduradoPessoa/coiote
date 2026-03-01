@@ -51,4 +51,14 @@ export class SessionDAO {
     getById(id: string) {
         return this.db.prepare('SELECT * FROM sessions WHERE id = ?').get(id) as any;
     }
+
+    getStatistics() {
+        const counts = this.db.prepare('SELECT COUNT(*) as count, SUM(total_tokens) as tokens FROM sessions').get() as any;
+        const tasks = this.db.prepare('SELECT COUNT(*) as count FROM tasks').get() as any;
+        return {
+            sessionCount: counts.count || 0,
+            totalTokens: counts.tokens || 0,
+            taskCount: tasks.count || 0
+        };
+    }
 }
