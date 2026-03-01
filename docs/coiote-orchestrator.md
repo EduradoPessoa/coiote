@@ -167,34 +167,31 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 
 #### Tarefas
 
-**Reporter e Event Bus**
-- [ ] `src/ui/reporter.ts` — EventEmitter tipado com todos os eventos (`coiote-development.md §2`)
-- [ ] Tipos: `CoioteEvent` com todas as variantes (plan, step, tool, error, warning, done)
-- [ ] Método `reporter.verbose()` controlado pela flag `--verbose`
-- [ ] Método `reporter.quiet()` — apenas erros + done
+**Camada de Comunicação (Reporter)**
+- [x] `src/ui/reporter.ts` — EventEmitter tipado com todos os eventos (`coiote-development.md §2`)
+- [x] Tipos: `CoioteEvent` com todas as variantes (plan, step, tool, error, warning, done)
+- [x] Método `reporter.verbose()` controlado pela flag `--verbose`
+- [x] Método `reporter.quiet()` — apenas erros + done
 
-**Componentes de Comunicação (baseados no PRD §4.4)**
-- [ ] `src/ui/components/PlanDisplay.tsx` — bloco PLANO com passos e arquivos
-- [ ] `src/ui/components/StepProgress.tsx` — "EXECUTANDO PASSO 3/7" com spinner
-- [ ] `src/ui/components/ToolCallDisplay.tsx` — "🔧 Lendo arquivo: X → Y linhas"
-- [ ] `src/ui/components/DiffPreview.tsx` — preview de arquivo antes de escrever
-- [ ] `src/ui/components/ErrorDisplay.tsx` — erro com contexto humano + opções (`PRD §4.4 Erros`)
-- [ ] `src/ui/components/DoneDisplay.tsx` — resumo final completo (`PRD §4.4 Conclusão`)
-- [ ] `src/ui/components/WarningDisplay.tsx` — warnings proativos
+**Componentes Visuais baseados no PRD**
+- [x] `src/ui/components/PlanDisplay.tsx` — bloco PLANO com passos e arquivos
+- [x] `src/ui/components/StepProgress.tsx` — "EXECUTANDO PASSO X/Y" com spinner
+- [x] `src/ui/components/ToolCallDisplay.tsx` — abstração visual da ferramenta rodando
+- [x] `src/ui/components/DiffPreview.tsx` — preview de arquivo antes de escrever
+- [x] `src/ui/components/ErrorDisplay.tsx` — erro com contexto humano + opções (`PRD §4.4`)
+- [x] `src/ui/components/DoneDisplay.tsx` — resumo final completo (`PRD §4.4`)
+- [x] `src/ui/components/WarningDisplay.tsx` — warnings proativos
 
 **Prompts Interativos**
-- [ ] `src/ui/prompts.ts` — wrappers de `@inquirer/prompts`
-- [ ] `promptConfirm()` — [S/n] padrão
-- [ ] `promptHighRisk()` — digitação de texto para ações irreversíveis (`PRD §4.7`)
-- [ ] `promptSelectRecovery()` — opções de recuperação pós-erro
-- [ ] `promptSessionMode()` — nível de autonomia no início da sessão
+- [x] `src/ui/prompts.ts` — wrappers de `@inquirer/prompts`
+- [x] `promptConfirm()`, `promptHighRisk()`, `promptSelectRecovery()`, `promptSessionMode()`
 
 **Sistema de Permissões**
-- [ ] `src/permissions/permission-manager.ts` — lógica central
-- [ ] `src/permissions/session-config.ts` — nível ask-all / ask-destructive / auto
-- [ ] `src/permissions/rules.ts` — ações que SEMPRE requerem confirmação (ver `PRD §6`)
+- [x] `src/permissions/permission-manager.ts` — lógica central
+- [x] `src/permissions/session-config.ts` — níveis ask-all / ask-destructive / auto
+- [x] `src/permissions/rules.ts` — ações que SEMPRE requerem confirmação (PRD §6)
 
-**Critério da Semana:** Exibição visual completa de plano + execução + erro + resumo, testável com `@ink-testing-library`
+**Critério da Semana:** ✅ Exibição visual completa testada com `@inkjs/testing-library`o + resumo, testável com `@ink-testing-library`
 
 ---
 
@@ -509,7 +506,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 ```
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
-Fase 1:  [x] Semana 1  [x] Semana 2  [ ] Semana 3  [ ] Semana 4
+Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [ ] Semana 4
 Fase 2:  [ ] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
