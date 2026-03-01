@@ -253,17 +253,17 @@ O Coiote entende o projeto em que está trabalhando sem precisar de instruções
 
 **Referências:** `coiote-data.md §5` (Config de Projeto), `coiote-stack.md §5` (Git tool)
 
-- [ ] `src/config/project-config.ts` — parser de `coiote.config.md`
+- [x] `src/config/project-config.ts` — parser de `coiote.config.md`
   - Detecta e lê automaticamente na raiz do projeto
   - Parse de seções: contexto, comandos, convenções, permissões
   - Fallback para padrões quando arquivo não existe
-- [ ] `coiote init` — cria `coiote.config.md` interativamente
-- [ ] Git tools:
-  - [ ] `tools/git/git-status.ts`
-  - [ ] `tools/git/git-diff.ts`
-  - [ ] `tools/git/git-commit.ts` — com confirmação e geração de mensagem
-  - [ ] `tools/git/git-branch.ts`
-- [ ] Auto-commit configurável pós-tarefa (`coiote.config.md`)
+- [x] `coiote init` — cria `coiote.config.md` interativamente
+- [x] Git tools:
+  - [x] `tools/git/git-status.ts`
+  - [x] `tools/git/git-diff.ts`
+  - [x] `tools/git/git-commit.ts` — com confirmação e geração de mensagem
+  - [x] `tools/git/git-branch.ts`
+- [x] Auto-commit configurável pós-tarefa (`coiote.config.md`)
 
 ---
 
@@ -504,7 +504,7 @@ Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usab
 STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
 Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
-Fase 2:  [ ] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
+Fase 2:  [x] Semana 5  [ ] Semana 6  [ ] Semana 7  [ ] Semana 8
 Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
 ```

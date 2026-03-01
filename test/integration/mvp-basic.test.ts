@@ -96,10 +96,12 @@ describe('Integração MVP do Loop Agêntico', () => {
         const agent = new CoioteAgent({
             provider: mockProvider,
             projectRoot: 'E:/mock/root',
-            reporter: reporter,
+            reporter,
             permissions: pManager,
             tools: tReg,
-            model: 'claude-3-5-sonnet-latest'
+            model: 'claude-mock',
+            globalConfig: { get: () => false } as any,
+            projectConfig: { permissions: { sensitiveFiles: [] } } as any
         });
 
         await agent.run('Criar o arquivo README com titulo.');

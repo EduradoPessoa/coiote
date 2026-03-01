@@ -8,6 +8,7 @@ import { createRequire } from 'module';
 import { Command } from 'commander';
 import { GlobalConfig } from './config/global-config.js';
 import { KeyManager } from './config/key-manager.js';
+import { initializeProject } from './config/init-project.js';
 import { CoioteAgent } from './agent/agent.js';
 import { Reporter } from './ui/reporter.js';
 import { PermissionManager } from './permissions/permission-manager.js';
@@ -15,6 +16,8 @@ import { AnthropicProvider } from './providers/anthropic.js';
 import { ToolRegistry } from './tools/registry.js';
 import { readFileTool, writeFileTool, listFilesTool } from './tools/filesystem/index.js';
 import { runCommandTool } from './tools/shell/index.js';
+import { gitStatusTool, gitDiffTool, gitCommitTool, gitBranchTool } from './tools/git/index.js';
+import { ProjectConfigManager } from './config/project-config.js';
 
 interface PackageJson {
     version: string;
@@ -71,6 +74,13 @@ export function createProgram(): Command {
             tools.register(writeFileTool);
             tools.register(listFilesTool);
             tools.register(runCommandTool);
+            // git tools
+            tools.register(gitStatusTool);
+            tools.register(gitDiffTool);
+            tools.register(gitCommitTool);
+            tools.register(gitBranchTool);
+
+            const projectConfig = await ProjectConfigManager.load(process.cwd());
 
             const agent = new CoioteAgent({
                 provider,
@@ -78,7 +88,9 @@ export function createProgram(): Command {
                 permissions,
                 tools,
                 model: options.model,
-                projectRoot: process.cwd()
+                projectRoot: process.cwd(),
+                globalConfig: globalConf,
+                projectConfig
             });
 
             try {
@@ -114,6 +126,17 @@ export function createProgram(): Command {
             const keyManager = new KeyManager();
             await keyManager.storeKey(provider, key);
             console.log(`✅ Chave API para O provider [${provider}] definida firmemente com Keychain / AES.`);
+        });
+
+    program.command('init')
+        .description('Inicializa configurações de diretório local (coiote.config.md)')
+        .action(async () => {
+            const result = await initializeProject(process.cwd());
+            if (result) {
+                console.log('🐺 Arquivo `coiote.config.md` gerado com modelo padrão no CWD. Edite as intenções do projeto livremente.');
+            } else {
+                console.log('⚠️ Arquivo `coiote.config.md` já existente e intacto.');
+            }
         });
 
     return program;

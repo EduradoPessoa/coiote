@@ -8,6 +8,9 @@ import type { ToolRegistry } from '../tools/registry.js';
 import type { PermissionManager } from '../permissions/permission-manager.js';
 import { SYSTEM_PROMPT } from './system-prompt.js';
 import { ContextOverflowError } from '../errors.js';
+import { simpleGit } from 'simple-git';
+import type { GlobalConfig } from '../config/global-config.js';
+import type { ProjectConfig } from '../config/project-config.js';
 
 // Import Anthropic Tool directly for types or use registry abstraction
 export interface CoioteAgentConfig {
@@ -17,6 +20,8 @@ export interface CoioteAgentConfig {
     tools: ToolRegistry;
     permissions: PermissionManager;
     model: string;
+    globalConfig: GlobalConfig;
+    projectConfig: ProjectConfig;
 }
 
 const LOOP_GUARDS = {
@@ -185,6 +190,19 @@ export class CoioteAgent {
             });
             // Save history background
             this.messagesDb.saveHistory(sessionId, taskId, history as any[]);
+
+            // Auto-commit rule payload
+            if (this.config.globalConfig.get('autoCommit')) {
+                const git = simpleGit(this.config.projectRoot);
+                if (await git.checkIsRepo()) {
+                    try {
+                        await git.add('.');
+                        await git.commit(`Coiote Task [${taskId.toString()}]: ${prompt}`);
+                    } catch (e) {
+                        this.config.reporter.warning('Auto-commit falhou: ' + (e instanceof Error ? e.message : String(e)));
+                    }
+                }
+            }
 
             // Calculate derived plan paths modified using unique dedups of the actions if we tracked them robustly.
             this.config.reporter.done({

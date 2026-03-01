@@ -3,7 +3,7 @@
 > **Arquivo:** coiote.config.md  
 > **Nível de segurança:** Básico — permissões amplas para desenvolvimento ativo  
 > **Última atualização:** 2026-02-28  
-> **Versão:** 1.5 — Estado de completude total do projeto (FASE 1 - MVP FINALIZADO)
+> **Versão:** 1.6 — Phase 2 Ongoing (Context Awareness + Git Integration)
 
 ---
 
@@ -37,11 +37,10 @@ docs/                         ← documentação de desenvolvimento (consultar s
 
 ### Estado Atual do Projeto
 
-- **Fase:** 1 — MVP Funcional (FINALIZADA 🏁)
-- **Agente Principal:** `CoioteAgent` em total funcionamento (System Prompt + Planner Tool Injection) com proteções e MAX_TOKENS thresholds.
-- **Armazenamento / DB:** `better-sqlite3` guardando sessões, historicos e estatitisticas. O `conf` guarda preferências Globais via comandos CLI.
-- **Teste de Integração:** O teste `mvp-basic.test.ts` emulando a conversação provou a consistência lógica de toda construção (UI emite EventBus -> Tools emitem Action -> Permissão pede Confirmação -> Agente lê Stream de Tools).
-- **Próximo passo:** Transição para FASE 2: Compreensão de Código profunda com ContextAwareness.
+- **Fase:** 2 — Context Awareness
+- **Agente Principal:** `CoioteAgent` em total funcionamento (System Prompt + Planner Tool Injection) com porteção MAX_TOKENS thresholds.
+- **Integração Externa (Semana 5):** `simple-git` adicionado permitindo as tools `git_status`, `git_diff`, `git_commit`, `git_branch`. E configurador `ProjectConfigManager` habilitado.
+- **Próximo passo:** Semana 6 - Context Loading Inteligente
 
 ---
 
