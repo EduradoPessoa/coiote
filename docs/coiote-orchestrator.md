@@ -31,14 +31,19 @@ Este documento é o **mapa mestre** do desenvolvimento do Coiote. Ele integra to
 
 ### Documentos de Referência
 
-| Documento | Papel no Projeto |
-|-----------|-----------------|
-| `COIOTE_DOCUMENTACAO.md` | PRD — visão geral, filosofia, UX de comunicação |
-| `coiote-stack.md` | Stack tecnológica completa e decisões arquiteturais |
-| `coiote-development.md` | Padrões de código, estrutura de módulos, boas práticas |
-| `coiote-data.md` | Schema de dados, persistência, ciclo de vida |
-| `coiote-security.md` | Modelo de ameaças, controles de segurança |
-| **`coiote-orchestrator.md`** | ← Você está aqui — plano de execução |
+| Documento | Localização | Papel no Projeto |
+|-----------|-------------|-----------------|
+| `coiote.config.md` | `/` (raiz) | Config operacional — lido automaticamente pelo agente a cada sessão |
+| `coiote-prd.md` | `docs/` | PRD — visão geral, filosofia, UX de comunicação |
+| `coiote-stack.md` | `docs/` | Stack tecnológica completa e decisões arquiteturais |
+| `coiote-development.md` | `docs/` | Padrões de código, estrutura de módulos, boas práticas |
+| `coiote-data.md` | `docs/` | Schema de dados, persistência, ciclo de vida |
+| `coiote-security.md` | `docs/` | Modelo de ameaças, controles de segurança |
+| **`coiote-orchestrator.md`** | `docs/` | ← Você está aqui — plano de execução |
+| `coiote-agent-code.md` | `docs/agents/` | Perfil do agente especializado em código |
+| `coiote-agent-tests.md` | `docs/agents/` | Perfil do agente especializado em testes |
+| `coiote-agent-security.md` | `docs/agents/` | Perfil do agente especializado em segurança |
+| `coiote-agent-docs.md` | `docs/agents/` | Perfil do agente especializado em documentação |
 
 ---
 

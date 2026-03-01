@@ -2,7 +2,8 @@
 
 > **Arquivo:** coiote.config.md  
 > **Nível de segurança:** Básico — permissões amplas para desenvolvimento ativo  
-> **Última atualização:** 2026-02-28
+> **Última atualização:** 2026-02-28  
+> **Versão:** 1.1 — estrutura de docs/ e agents/ adicionada
 
 ---
 
@@ -15,6 +16,24 @@ SQLite para persistência local e execa para execução de comandos shell.
 O projeto segue ESM nativo, TypeScript strict e padrão Conventional Commits.
 Toda comunicação com o usuário passa pelo Reporter — nunca use console.log diretamente.
 Tools seguem a interface `Tool<TInput, TOutput>` definida em `src/tools/types.ts`.
+
+### Estrutura de documentação
+
+```
+coiote.config.md              ← este arquivo — lido automaticamente a cada sessão
+docs/                         ← documentação de desenvolvimento (consultar sob demanda)
+├── coiote-prd.md                 Visão geral, filosofia e UX de comunicação
+├── coiote-stack.md               Stack tecnológica e decisões arquiteturais (ADRs)
+├── coiote-development.md         Padrões de código, estrutura de módulos, boas práticas
+├── coiote-data.md                Schema SQLite, persistência, ciclo de vida dos dados
+├── coiote-security.md            Modelo de ameaças, controles e checklist de segurança
+├── coiote-orchestrator.md        Plano de execução por fases com critérios de DoD
+└── agents/                   ← perfis de agentes especializados (carregar ao delegar)
+    ├── coiote-agent-code.md      Escrita e refatoração de código TypeScript
+    ├── coiote-agent-tests.md     Testes unitários, integração e cobertura
+    ├── coiote-agent-security.md  Auditoria de segurança e revisão de superfície de ataque
+    └── coiote-agent-docs.md      Documentação técnica, changelogs e sincronização
+```
 
 ---
 
@@ -159,6 +178,15 @@ src/errors.ts
 src/permissions/rules.ts
 ```
 
+Ao delegar para um agente especializado, carregar também o perfil correspondente de `docs/agents/`:
+
+```
+docs/agents/coiote-agent-code.md      → tarefas de escrita ou refatoração de código
+docs/agents/coiote-agent-tests.md     → tarefas de testes ou cobertura
+docs/agents/coiote-agent-security.md  → tarefas de auditoria ou revisão de segurança
+docs/agents/coiote-agent-docs.md      → tarefas de documentação ou changelog
+```
+
 ---
 
 ## Notas para o Agente
@@ -168,3 +196,6 @@ src/permissions/rules.ts
 - Ao adicionar dependência, verificar se há alternativa já presente no projeto antes
 - Testes de integração usam `MockProvider` — nunca chamar a API real nos testes
 - O sistema de comunicação com o usuário é o principal diferencial do projeto — priorize clareza e feedback em tempo real em qualquer funcionalidade nova
+- Ao receber uma tarefa complexa que cruze especialidades, delegar para o agente correto carregando o perfil de `docs/agents/` correspondente antes de executar
+- Documentação de desenvolvimento fica em `docs/` — consultar os arquivos relevantes antes de tomar decisões arquiteturais ou de stack
+- Ao concluir uma implementação significativa, acionar o Agente de Documentação (`docs/agents/coiote-agent-docs.md`) para manter os docs sincronizados

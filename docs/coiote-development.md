@@ -96,7 +96,21 @@ coiote/
 │   ├── integration/              # Testes fim-a-fim com LLM mockado
 │   └── fixtures/                 # Projetos fictícios para testes
 │
-├── docs/                         # Documentação do projeto
+├── docs/                         # Documentação de desenvolvimento
+│   ├── coiote-prd.md             # PRD — visão geral, filosofia, UX de comunicação
+│   ├── coiote-stack.md           # Stack tecnológica e decisões arquiteturais
+│   ├── coiote-development.md     # ← Este arquivo
+│   ├── coiote-data.md            # Schema de dados, persistência, ciclo de vida
+│   ├── coiote-security.md        # Modelo de ameaças, controles de segurança
+│   ├── coiote-orchestrator.md    # Plano de execução por fases
+│   │
+│   └── agents/                   # Perfis de agentes especializados
+│       ├── coiote-agent-code.md       # Agente de escrita e refatoração de código
+│       ├── coiote-agent-tests.md      # Agente de testes e cobertura
+│       ├── coiote-agent-security.md   # Agente de auditoria de segurança
+│       └── coiote-agent-docs.md       # Agente de documentação e changelogs
+│
+├── coiote.config.md              # Config operacional do projeto (lido automaticamente)
 ├── tsconfig.json
 ├── tsup.config.ts
 ├── vitest.config.ts
