@@ -14,6 +14,8 @@ import type { ProjectConfig } from '../config/project-config.js';
 import { ContextManager } from './context-manager.js';
 import { ToolCallDAO } from '../persistence/tool-calls.js';
 import { ContextCompactor } from './compactor.js';
+import { withRetry } from '../utils/retry.js';
+import { LoopProtector } from '../utils/loop-protector.js';
 
 // Import Anthropic Tool directly for types or use registry abstraction
 export interface CoioteAgentConfig {
@@ -46,6 +48,7 @@ export class CoioteAgent {
     private abortController = new AbortController();
     private contextManager: ContextManager;
     private compactor: ContextCompactor;
+    private loopProtector = new LoopProtector();
 
     constructor(private config: CoioteAgentConfig) {
         this.planner = new AgentPlanner(config.provider, config.reporter);
@@ -117,7 +120,7 @@ export class CoioteAgent {
                     throw new ContextOverflowError(tokenEst, LOOP_GUARDS.MAX_TOKENS);
                 }
 
-                const stream = await this.config.provider.stream({
+                const stream = this.config.provider.stream({
                     messages: history as any,
                     system: systemPromptWithContext,
                     tools: this.config.tools.toAnthropicFormat() as any
@@ -168,6 +171,18 @@ export class CoioteAgent {
                 const toolResultBlocks: any[] = [];
 
                 for (const t of currentToolCalls) {
+                    const inputJson = JSON.stringify(t.input);
+                    if (this.loopProtector.check(t.name, inputJson)) {
+                        this.config.reporter.warning(`Possível loop infinito detectado na ferramenta [${t.name}]. Interrompendo loop secundário.`);
+                        toolResultBlocks.push({
+                            type: 'tool_result',
+                            tool_use_id: t.id,
+                            content: `Error: Loop detectado. Por favor, tente uma abordagem diferente ou peça ajuda ao usuário.`,
+                            is_error: true
+                        });
+                        continue;
+                    }
+
                     const toolInterface = this.config.tools.get(t.name);
                     let statusRes = { success: false, summary: '', error: '' };
                     if (t.name === 'write_file') filesModifiedCount++;

@@ -12,7 +12,7 @@ import { initializeProject } from './config/init-project.js';
 import { CoioteAgent } from './agent/agent.js';
 import { Reporter } from './ui/reporter.js';
 import { PermissionManager } from './permissions/permission-manager.js';
-import { AnthropicProvider } from './providers/anthropic.js';
+import { ProviderFactory } from './providers/factory.js';
 import { ToolRegistry } from './tools/registry.js';
 import { readFileTool, writeFileTool, listFilesTool, editFileTool, deleteFileTool, searchFilesTool } from './tools/filesystem/index.js';
 import { runCommandTool, runTestsTool, installPackageTool } from './tools/shell/index.js';
@@ -62,14 +62,11 @@ export function createProgram(): Command {
             const globalConf = new GlobalConfig();
             const keyManager = new KeyManager();
 
-            const anthApiKey = await keyManager.getKey('anthropic');
-            if (!anthApiKey) {
-                console.error('❌ Chave da Anthropic não encontrada.');
-                console.error('Configure usando: coiote config set-key anthropic sk-ant-...');
-                process.exit(1);
-            }
+            const providerName = options.model.startsWith('gpt') ? 'openai' :
+                options.model.startsWith('claude') ? 'anthropic' :
+                    globalConf.get('defaultProvider');
 
-            const provider = new AnthropicProvider(anthApiKey, options.model);
+            const provider = await ProviderFactory.create(providerName, options.model, keyManager);
             const permissions = new PermissionManager(reporter);
             if (options.auto) permissions.setMode('auto');
 
@@ -181,6 +178,14 @@ export function createProgram(): Command {
             const keyManager = new KeyManager();
             await keyManager.storeKey(provider, key);
             console.log(`✅ Chave API para O provider [${provider}] definida firmemente com Keychain / AES.`);
+        });
+
+    configCmd.command('set-provider <name>')
+        .description('Define o provider padrão (anthropic, openai, ollama)')
+        .action((name) => {
+            const globalConf = new GlobalConfig();
+            globalConf.set('defaultProvider', name);
+            console.log(`✅ Provider padrão definido para: ${name}`);
         });
 
     const dataCmd = program.command('data').description('Gerenciar dados locais e estatísticas');

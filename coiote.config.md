@@ -37,9 +37,9 @@ docs/                         ← documentação de desenvolvimento (consultar s
 
 ### Estado Atual do Projeto
 
-- **Fase:** 2 — Context Awareness (CONCLUÍDA)
-- **Funcionalidades:** Context Loading Inteligente, Sanitização de Segredos, Anti-Injection, Git Integration, Context Compaction, Telemetria (`data stats`).
-- **Próximo passo:** Fase 3 — Agência Completa (Multi-provider, Headless, MCP)
+- **Fase:** 3 — Agência Completa (EM DESENVOLVIMENTO)
+- **Funcionalidades:** Multi-Provider (Anthropic, OpenAI, Ollama), Retry Automático, Detecção de Loop, Context Compaction, Telemetria.
+- **Próximo passo:** Semana 11 - Slash Commands e Modo Headless
 
 ---
 

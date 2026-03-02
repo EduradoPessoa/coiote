@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { LLMProvider, ChatParams, StreamEvent } from './types.js';
 import { ProviderError } from '../errors.js';
+import { withRetry } from '../utils/retry.js';
 
 export class AnthropicProvider implements LLMProvider {
     public name = 'anthropic';

@@ -332,11 +332,11 @@ O Coiote pode ser usado como ferramenta de produção por times. Funciona em CI/
 
 **Referências:** `coiote-stack.md §4` (Providers), `coiote-security.md §3` (Shell)
 
-- [ ] `src/providers/openai.ts` — provider OpenAI-compatible (funciona com Gemini, DeepSeek)
-- [ ] `src/providers/ollama.ts` — provider para modelos locais
-- [ ] `coiote config set-provider` — troca de provider
-- [ ] Retry automático com backoff exponencial para erros de API transitórios
-- [ ] Detecção de loop infinito mais sofisticada (detectar repetição de tool calls)
+- [x] `src/providers/openai.ts` — provider OpenAI-compatible (funciona com Gemini, DeepSeek)
+- [x] `src/providers/ollama.ts` — provider para modelos locais
+- [x] `coiote config set-provider` — troca de provider
+- [x] Retry automático com backoff exponencial para erros de API transitórios
+- [x] Detecção de loop infinito mais sofisticada (detectar repetição de tool calls)
 - [ ] Recuperação automática de erros comuns (arquivo não encontrado → perguntar path correto)
 - [ ] Rate limiter de tokens e requests por sessão (`coiote-security.md §5`)
 
@@ -505,7 +505,7 @@ STATUS ATUAL: Fase 1 — MVP Funcional 🔨
 
 Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
 Fase 2:  [x] Semana 5  [x] Semana 6  [x] Semana 7  [x] Semana 8
-Fase 3:  [ ] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
+Fase 3:  [/] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
 ```
 
