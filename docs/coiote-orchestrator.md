@@ -31,19 +31,19 @@ Este documento é o **mapa mestre** do desenvolvimento do Coiote. Ele integra to
 
 ### Documentos de Referência
 
-| Documento | Localização | Papel no Projeto |
-|-----------|-------------|-----------------|
-| `coiote.config.md` | `/` (raiz) | Config operacional — lido automaticamente pelo agente a cada sessão |
-| `coiote-prd.md` | `docs/` | PRD — visão geral, filosofia, UX de comunicação |
-| `coiote-stack.md` | `docs/` | Stack tecnológica completa e decisões arquiteturais |
-| `coiote-development.md` | `docs/` | Padrões de código, estrutura de módulos, boas práticas |
-| `coiote-data.md` | `docs/` | Schema de dados, persistência, ciclo de vida |
-| `coiote-security.md` | `docs/` | Modelo de ameaças, controles de segurança |
-| **`coiote-orchestrator.md`** | `docs/` | ← Você está aqui — plano de execução |
-| `coiote-agent-code.md` | `docs/agents/` | Perfil do agente especializado em código |
-| `coiote-agent-tests.md` | `docs/agents/` | Perfil do agente especializado em testes |
-| `coiote-agent-security.md` | `docs/agents/` | Perfil do agente especializado em segurança |
-| `coiote-agent-docs.md` | `docs/agents/` | Perfil do agente especializado em documentação |
+| Documento                    | Localização    | Papel no Projeto                                                    |
+| ---------------------------- | -------------- | ------------------------------------------------------------------- |
+| `coiote.config.md`           | `/` (raiz)     | Config operacional — lido automaticamente pelo agente a cada sessão |
+| `coiote-prd.md`              | `docs/`        | PRD — visão geral, filosofia, UX de comunicação                     |
+| `coiote-stack.md`            | `docs/`        | Stack tecnológica completa e decisões arquiteturais                 |
+| `coiote-development.md`      | `docs/`        | Padrões de código, estrutura de módulos, boas práticas              |
+| `coiote-data.md`             | `docs/`        | Schema de dados, persistência, ciclo de vida                        |
+| `coiote-security.md`         | `docs/`        | Modelo de ameaças, controles de segurança                           |
+| **`coiote-orchestrator.md`** | `docs/`        | ← Você está aqui — plano de execução                                |
+| `coiote-agent-code.md`       | `docs/agents/` | Perfil do agente especializado em código                            |
+| `coiote-agent-tests.md`      | `docs/agents/` | Perfil do agente especializado em testes                            |
+| `coiote-agent-security.md`   | `docs/agents/` | Perfil do agente especializado em segurança                         |
+| `coiote-agent-docs.md`       | `docs/agents/` | Perfil do agente especializado em documentação                      |
 
 ---
 
@@ -92,6 +92,7 @@ Ter um CLI funcional onde o usuário pode executar uma tarefa simples e o Coiote
 #### Tarefas
 
 **Setup do Projeto**
+
 ```bash
 # Estrutura inicial
 pnpm init
@@ -107,12 +108,14 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 - [x] Configurar `vitest.config.ts` com coverage v8
 
 **Entrypoint CLI**
+
 - [x] `src/index.ts` — boot mínimo com verificação de Node.js version
 - [x] `src/cli.ts` — `commander` com estrutura base de comandos
 - [x] Comando `coiote --version` funcionando
 - [x] Comando `coiote --help` com descrição clara
 
 **Estrutura de Pastas**
+
 - [x] Criar estrutura completa de `src/` conforme `coiote-development.md §1`
 - [x] Criar `test/` com `fixtures/express-api/` (projeto de teste)
 - [x] `src/errors.ts` — hierarquia de erros base (`coiote-development.md §7`)
@@ -130,12 +133,14 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 #### Tarefas
 
 **Gestão de Chaves de API**
+
 - [x] `src/config/key-manager.ts` — KeyManager com keytar + fallback (`coiote-security.md §2`)
 - [ ] Comando `coiote config set-key anthropic` — configuração inicial da chave (Ainda não linkado na CLI)
 - [ ] Comando `coiote config show` — exibir configuração sem expor chaves (Ainda não linkado na CLI)
 - [x] Validação de formato de chave antes de armazenar
 
 **Provider Anthropic**
+
 - [x] `src/providers/types.ts` — interface `LLMProvider` completa
 - [x] `src/providers/anthropic.ts` — implementação com streaming
 - [ ] `src/providers/factory.ts` — factory pattern para instanciar (Adiado para quando houver Mocks/OpenAI na Fase 3)
@@ -152,6 +157,7 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 - [x] `tools/registry.ts` — `ToolRegistry` com conversão para formato Anthropic
 
 **Segurança nas Tools**
+
 - [x] `src/security/path-validator.ts` — path traversal prevention (`coiote-security.md §4`)
 - [x] `src/security/command-validator.ts` — blocklist e patterns (`coiote-security.md §3`)
 
@@ -168,12 +174,14 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 #### Tarefas
 
 **Camada de Comunicação (Reporter)**
+
 - [x] `src/ui/reporter.ts` — EventEmitter tipado com todos os eventos (`coiote-development.md §2`)
 - [x] Tipos: `CoioteEvent` com todas as variantes (plan, step, tool, error, warning, done)
 - [x] Método `reporter.verbose()` controlado pela flag `--verbose`
 - [x] Método `reporter.quiet()` — apenas erros + done
 
 **Componentes Visuais baseados no PRD**
+
 - [x] `src/ui/components/PlanDisplay.tsx` — bloco PLANO com passos e arquivos
 - [x] `src/ui/components/StepProgress.tsx` — "EXECUTANDO PASSO X/Y" com spinner
 - [x] `src/ui/components/ToolCallDisplay.tsx` — abstração visual da ferramenta rodando
@@ -183,10 +191,12 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 - [x] `src/ui/components/WarningDisplay.tsx` — warnings proativos
 
 **Prompts Interativos**
+
 - [x] `src/ui/prompts.ts` — wrappers de `@inquirer/prompts`
 - [x] `promptConfirm()`, `promptHighRisk()`, `promptSelectRecovery()`, `promptSessionMode()`
 
 **Sistema de Permissões**
+
 - [x] `src/permissions/permission-manager.ts` — lógica central
 - [x] `src/permissions/session-config.ts` — níveis ask-all / ask-destructive / auto
 - [x] `src/permissions/rules.ts` — ações que SEMPRE requerem confirmação (PRD §6)
@@ -204,35 +214,42 @@ npx tsc --init  # + configurar com as opções de coiote-stack.md §2
 #### Tarefas
 
 **Loop Agêntico**
+
 - [x] `src/agent/agent.ts` — `CoioteAgent` com loop completo (`coiote-development.md §6`)
 - [x] Loop guards: MAX_ITERATIONS=50, MAX_TOKENS=180k, timeout 10min
 - [x] Tratamento de erros do loop com opções de recuperação
 - [x] `AbortController` integrado para Ctrl+C limpo
 
 **Planner**
+
 - [x] `src/agent/planner.ts` — prompt de planejamento → `ExecutionPlan` estruturado
 - [x] Extração de arquivos mencionados no plano para exibição
 
 **System Prompt**
+
 - [x] `SYSTEM_PROMPT` base com identidade do Coiote
 - [x] Instruções anti-injection (`coiote-security.md §6`)
 - [x] Instruções de comunicação estruturada (como usar as tools)
 
 **Persistência Básica**
+
 - [x] `src/persistence/db.ts` — singleton SQLite com auto-migrations (`coiote-data.md §3`)
 - [x] `src/persistence/sessions.ts` — criar/atualizar sessões
 - [x] `src/persistence/messages.ts` — persistir histórico ao final da task
 
 **Configuração Global**
+
 - [x] `src/config/global-config.ts` — `conf` com schema completo (`coiote-data.md §4`)
 - [x] `coiote config` — subcomandos básicos (set, get, show)
 
 **Teste E2E do MVP**
+
 - [x] `test/integration/mvp-basic.test.ts` com `MockProvider`
 - [x] Cenário: criar arquivo README → deve exibir plano, pedir confirmação, criar arquivo
 - [x] Cenário: erro de tool → deve exibir erro com contexto + opções
 
 **Critérios da Fase 1:**
+
 - ✅ `coiote "crie um README.md..."` testa completo em E2E mockado
 - ✅ Componentes visuais chamados na ordem (PLANO > DIFF > SUMMARY)
 - ✅ Banco SQLite com schema v1 em pé
@@ -312,6 +329,7 @@ O Coiote entende o projeto em que está trabalhando sem precisar de instruções
 - [x] `coiote data stats` — espaço usado, sessões armazenadas, tokens totais
 
 **Critério da Fase 2:**
+
 - `coiote "adicione endpoint GET /health"` funciona em projeto Express sem instrução manual
 - Coiote lê `coiote.config.md` e adapta comportamento
 - Git commit automático (quando configurado) com mensagem gerada
@@ -376,6 +394,7 @@ O Coiote pode ser usado como ferramenta de produção por times. Funciona em CI/
 - [ ] `coiote data cleanup` — limpeza automática configurável
 
 **Critério da Fase 3:**
+
 - Funciona com Claude, GPT-4 e modelos Ollama locais
 - Modo headless usável em CI/CD com exit codes corretos
 - Slash commands funcionando no REPL
@@ -431,6 +450,7 @@ Versão 1.0 pública, instalável via `npx coiote`, com documentação completa 
 - [ ] `npx coiote@latest` funcionando sem instalação global
 
 **Critério da Fase 4 / v1.0:**
+
 - `npx coiote "crie um endpoint de autenticação"` funciona para qualquer usuário
 - Documentação pública completa
 - Zero vulnerabilidades conhecidas
@@ -442,26 +462,26 @@ Versão 1.0 pública, instalável via `npx coiote`, com documentação completa 
 
 ## 7. Critérios de Entrada e Saída por Fase
 
-| Fase | Critério de Entrada | Critério de Saída (DoD) |
-|------|--------------------|-----------------------|
-| **Fase 1** | Repositório criado, Node.js 20+ instalado | CLI funcional, loop E2E com 1 tarefa simples, UX de comunicação implementada, testes ≥ 70% |
-| **Fase 2** | Fase 1 completa + projeto Express de teste disponível | Context loading automático, git integration, histórico navegável, testes ≥ 75% |
-| **Fase 3** | Fase 2 completa + chaves de 2+ providers disponíveis | Multi-provider, headless mode, MCP, audit log, testes ≥ 80%, 0 CVE high |
-| **Fase 4** | Fase 3 completa + decisão de nome/domínio final | v1.0 publicada, docs completa, startup < 300ms, testes ≥ 85% |
+| Fase       | Critério de Entrada                                   | Critério de Saída (DoD)                                                                    |
+| ---------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Fase 1** | Repositório criado, Node.js 20+ instalado             | CLI funcional, loop E2E com 1 tarefa simples, UX de comunicação implementada, testes ≥ 70% |
+| **Fase 2** | Fase 1 completa + projeto Express de teste disponível | Context loading automático, git integration, histórico navegável, testes ≥ 75%             |
+| **Fase 3** | Fase 2 completa + chaves de 2+ providers disponíveis  | Multi-provider, headless mode, MCP, audit log, testes ≥ 80%, 0 CVE high                    |
+| **Fase 4** | Fase 3 completa + decisão de nome/domínio final       | v1.0 publicada, docs completa, startup < 300ms, testes ≥ 85%                               |
 
 ---
 
 ## 8. Gestão de Riscos
 
-| Risco | Probabilidade | Impacto | Mitigação |
-|-------|---------------|---------|-----------|
-| SDK da Anthropic mudar breaking changes | Média | Alto | Interface `LLMProvider` abstrai o SDK — mudança isolada em `anthropic.ts` |
-| `ink` incompatibilidades com Windows | Alta | Médio | Testes de CI no Windows desde a Fase 1; fallback para output simples |
-| Prompt injection comprometer usuário | Média | Crítico | `InjectionDetector` + system prompt defensivo + never-send-sensitive config |
-| Custo de API explodir em loop infinito | Média | Alto | Rate limiter de tokens por sessão + MAX_ITERATIONS + timeout por task |
-| Dependência crítica abandonada | Baixa | Alto | Preferir deps com grande adoção; manter abstração nos pontos de integração |
-| Path traversal em produção | Baixa | Crítico | `PathValidator` obrigatório em todas as tools de FS desde a Fase 1 |
-| Startup lento (> 1s) | Média | Médio | Lazy imports; medir startup em CI desde a Fase 2 |
+| Risco                                   | Probabilidade | Impacto | Mitigação                                                                   |
+| --------------------------------------- | ------------- | ------- | --------------------------------------------------------------------------- |
+| SDK da Anthropic mudar breaking changes | Média         | Alto    | Interface `LLMProvider` abstrai o SDK — mudança isolada em `anthropic.ts`   |
+| `ink` incompatibilidades com Windows    | Alta          | Médio   | Testes de CI no Windows desde a Fase 1; fallback para output simples        |
+| Prompt injection comprometer usuário    | Média         | Crítico | `InjectionDetector` + system prompt defensivo + never-send-sensitive config |
+| Custo de API explodir em loop infinito  | Média         | Alto    | Rate limiter de tokens por sessão + MAX_ITERATIONS + timeout por task       |
+| Dependência crítica abandonada          | Baixa         | Alto    | Preferir deps com grande adoção; manter abstração nos pontos de integração  |
+| Path traversal em produção              | Baixa         | Crítico | `PathValidator` obrigatório em todas as tools de FS desde a Fase 1          |
+| Startup lento (> 1s)                    | Média         | Médio   | Lazy imports; medir startup em CI desde a Fase 2                            |
 
 ---
 
@@ -490,25 +510,25 @@ pnpm run analyze
 
 Estas métricas devem ser avaliadas manualmente a cada fase com um teste de usabilidade informal:
 
-| Cenário | Critério de Qualidade |
-|---------|----------------------|
-| Tarefa simples (criar arquivo) | Usuário entende o que vai acontecer antes de confirmar |
-| Tarefa com erro | Usuário entende O QUÊ falhou e POR QUÊ sem consultar logs |
-| Tarefa longa (> 30s) | Usuário nunca fica > 3s sem feedback visual |
-| Ação irreversível | Usuário precisa digitar texto de confirmação — não é possível confirmar por acidente |
-| Tarefa concluída | Usuário sabe exatamente o que foi feito, sem ambiguidade |
+| Cenário                        | Critério de Qualidade                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------ |
+| Tarefa simples (criar arquivo) | Usuário entende o que vai acontecer antes de confirmar                               |
+| Tarefa com erro                | Usuário entende O QUÊ falhou e POR QUÊ sem consultar logs                            |
+| Tarefa longa (> 30s)           | Usuário nunca fica > 3s sem feedback visual                                          |
+| Ação irreversível              | Usuário precisa digitar texto de confirmação — não é possível confirmar por acidente |
+| Tarefa concluída               | Usuário sabe exatamente o que foi feito, sem ambiguidade                             |
 
 ### Rastreamento de Fases
 
 ```
-STATUS ATUAL: Fase 1 — MVP Funcional 🔨
+STATUS ATUAL: Fase 3 — Agencia Completa CONCLUIDA
 
 Fase 1:  [x] Semana 1  [x] Semana 2  [x] Semana 3  [x] Semana 4
 Fase 2:  [x] Semana 5  [x] Semana 6  [x] Semana 7  [x] Semana 8
-Fase 3:  [/] Semana 9  [ ] Semana 10 [ ] Semana 11 [ ] Semana 12 [ ] Semana 13 [ ] Semana 14
+Fase 3:  [x] Semana 9  [x] Semana 10 [x] Semana 11 [x] Semana 12 [x] Semana 13 [x] Semana 14
 Fase 4:  [ ] Semana 15 [ ] Semana 16 [ ] Semana 17 [ ] Semana 18 [ ] Semana 19 [ ] Semana 20
 ```
 
 ---
 
-*Este orquestrador é um documento vivo. Atualize o status das tarefas e ajuste o roadmap conforme o projeto evolui.*
+_Este orquestrador é um documento vivo. Atualize o status das tarefas e ajuste o roadmap conforme o projeto evolui._

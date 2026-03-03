@@ -319,26 +319,27 @@ Se você está em dúvida por onde começar, procure issues com a label [`good f
 
 ## Roadmap
 
-O desenvolvimento está dividido em 4 fases:
+O desenvolvimento esta dividido em 4 fases:
 
 ```
-Fase 1 — MVP Funcional         (semanas 1–4)   ✅ Concluído
-  Loop básico, tools de filesystem e shell,
-  sistema de comunicação, permissões
+Fase 1 — MVP Funcional         (semanas 1–4)   ✅ Concluido
+  Loop basico, tools de filesystem e shell,
+  sistema de comunicacao, permissoes
 
-Fase 2 — Context Awareness     (semanas 5–8)   � em andamento
+Fase 2 — Context Awareness     (semanas 5–8)   ✅ Concluido
   Git integration, leitura de coiote.config.md,
-  histórico de sessões, compactação de contexto
+  historico de sessoes, compactacao de contexto
 
-Fase 3 — Agência Completa      (semanas 9–14)  📅 planejado
-  Multi-provider, modo headless, MCP servers,
-  slash commands, uso em CI/CD
+Fase 3 — Agencia Completa     (semanas 9–14)  ✅ Concluido
+  Multi-provider (Anthropic, OpenAI, Ollama),
+  modo headless para CI/CD, slash commands,
+  recovery automatico, rate limiter, audit log
 
-Fase 4 — Polimento             (semanas 15–20) 📅 planejado
-  TUI rica, syntax highlighting, publicação npm
+Fase 4 — Polimento            (semanas 15–20) 📅 planejado
+  TUI rica, syntax highlighting, publicacao npm
 ```
 
-O plano detalhado com tarefas semana a semana está em [`docs/coiote-orchestrator.md`](./docs/coiote-orchestrator.md).
+O plano detalhado com tarefas semana a semana esta em [`docs/coiote-orchestrator.md`](./docs/coiote-orchestrator.md).
 
 ---
 
@@ -369,11 +370,11 @@ Não. O Coiote roda localmente e fala diretamente com a API do LLM que você con
 **Funciona sem internet?**  
 Para modelos locais via Ollama, sim. Para Claude e GPT-4, você precisa de conexão com as respectivas APIs.
 
-**Qual modelo de linguagem é usado?**  
-Por padrão, Claude Sonnet da Anthropic. Mas a arquitetura é multi-provider — você poderá usar OpenAI, Gemini ou modelos Ollama locais (Fase 3 do roadmap).
+**Qual modelo de linguagem e usado?**  
+Por padrao, Claude Sonnet da Anthropic. Mas a arquitetura e multi-provider — voce pode usar OpenAI, Gemini ou modelos Ollama locais.
 
 **Posso usar em CI/CD?**  
-Isso está no plano para a Fase 3, com um modo `--headless` que opera sem prompts interativos e retorna exit codes semânticos.
+Sim! O modo headless (`--headless`) opera sem prompts interativos e retorna exit codes semanticos. Use `coiote --headless "sua tarefa"` ou `coiote -f tarefas.md`.
 
 ---
 
